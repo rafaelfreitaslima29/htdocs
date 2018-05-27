@@ -1,0 +1,13 @@
+{
+	"name" : "rafael/aguavenda",
+	"require" : {
+		"rain/raintpl" : ">=3.0.0",
+		"slim/slim" : "3.0",
+		"phpunit/phpunit" : "6.5.7"
+	},
+	"autoload" : {
+		"psr-4" : {
+			"Rfls\\" : "vendor\\rfls\\aguavenda\\src"
+		}
+	}
+}
