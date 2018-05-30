@@ -203,14 +203,30 @@ class Routes
             $cli->setCli_pk_int(7);
             
             $receb = new Recebimento();
+            $receb->setPk(4);
             $receb->setCliente_fk( $cli->getCli_pk_int() );
-            $receb->setValor(75.60);
-            $receb->setObs("teste de recebimento");
+            $receb->setValor(120.60);
+            $receb->setObs("teste 333");
             
             $recebDao = new RecebimentoDao();
-            $recebDao->incluir($receb);
+            $x = new Recebimento();
             
             
+           
+            $xy = $recebDao->pesquisar($receb);
+            foreach ($xy as $x)
+            {
+                echo $x->getPk()."  |  ";
+                echo $x->getCliente_fk()."  |  ";
+                echo $x->getData()."  |  ";
+                echo $x->getObs()."  |  ";
+                echo $x->getValor()."  |  ";
+                
+                
+            }
+                
+                
+  //          var_dump($x);
             
             
             
