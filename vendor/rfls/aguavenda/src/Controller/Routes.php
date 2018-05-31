@@ -204,7 +204,7 @@ class Routes
             
             $receb = new Recebimento();
             $receb->setPk(4);
-            $receb->setCliente_fk( $cli->getCli_pk_int() );
+            $receb->setCliente_fk( 22 );
             $receb->setValor(120.60);
             $receb->setObs("teste 333");
             
@@ -213,7 +213,7 @@ class Routes
             
             
            
-            $xy = $recebDao->pesquisar($receb);
+            $xy = $recebDao->pesquisarTodosPorCliente($receb);
             foreach ($xy as $x)
             {
                 echo $x->getPk()."  |  ";

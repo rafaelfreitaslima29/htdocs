@@ -128,93 +128,54 @@ class RecebimentoDao extends AbstractDao
     /**
      * {@inheritDoc}
      * @see \Rfls\Model\Dao\AbstractDao::pesquisarTodos()
-     * @desc Método que retorna um array de objetos do tipo ListaPedido, dos registros da tabela ListaPedido do banco de dados.
+     * @desc Método que retorna um array de objetos do tipo Recebimento, dos registros da tabela Recebimento do banco de dados.
      */
     public function pesquisarTodos()
     {
-        // SELECT * FROM `tb_lista_pedido`
-        $sql = "SELECT
-                 *
-                FROM
-                `tb_lista_pedido`";
+        $sql = "SELECT 
+                * 
+                FROM 
+                `tb_recebimento` 
+                ORDER BY 
+                `tb_recebimento`.`recebimento_pk` 
+                DESC";
         
         $pdo = $this->Sql();
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         
-        
-        $listaPedidos = array();
-        foreach ($result as $res)
-        {
-            $listaPedido = new ListaPedido();
-            $produto = new Produto();
-            
-            $listaPedido->setLista_pedido_pk( $res["lista_pedido_pk"] );
-            $listaPedido->setLista_pedido_pedido_fk( $res["lista_pedido_pedido_fk"] );
-            
-            $produto->setPk( $res["lista_pedido_produto_id"] );
-            $produto->setNome( $res["lista_pedido_produto_nome"] );
-            $produto->setValor( $res["lista_pedido_produto_valor"] );
-            $listaPedido->setLista_pedido_produto( $produto );
-            
-            $listaPedido->setLista_pedido_quantidade( $res["lista_pedido_quantidade"] );
-            $listaPedido->setLista_pedido_subtotal( $res["lista_pedido_subtotal"] );
-            
-            array_push($listaPedidos, $listaPedido);
-        }
-        return $listaPedidos;
-        
+        return $this->arrayObjRecebimento($result);
     }
     
     
     /**
      * {@inheritDoc}
      * @see \Rfls\Model\Dao\AbstractDao::pesquisarTodos()
-     * @desc Método que retorna um array de objetos do tipo ListaPedido ele recebe como parametro um objeto do tipo pedido com seu ID preenchido, dos registros da tabela ListaPedido do banco de dados.
+     * @desc Método que retorna um array de objetos do tipo Recebimentoo ele recebe como parametro um objeto do tipo Recebimento com com seu FK preenchido, dos registros da tabela ListaPedido do banco de dados.
      */
-    public function pesquisarPorPedido($pedido)
+    public function pesquisarTodosPorCliente($recebimento)
     {
-        //
-        $pedid = new Pedido();
-        $pedid->setPk( $pedido->getPk() );
+        $receb = new Recebimento();
+        $receb = $this->obsRecebimento($recebimento);
         
-        
-        //SELECT * FROM `tb_lista_pedido` WHERE `lista_pedido_pedido_fk` = 2
         $sql = "SELECT
-                 *
-                FROM
-                `tb_lista_pedido`
-                WHERE
-                `lista_pedido_pedido_fk` = :numeropedido";
+                * 
+                FROM 
+                `tb_recebimento` 
+                WHERE 
+                `recebimento_cliente_fk` = :fkcliente 
+                ORDER BY 
+                `recebimento_pk` 
+                DESC";
         
         $pdo = $this->Sql();
         $stmt = $pdo->prepare($sql);
-        $stmt->bindValue( ":numeropedido", $pedid->getPk() );
+        $stmt->bindValue( ":fkcliente", $receb->getCliente_fk() );
         $stmt->execute();
         $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         
-        $listaPedidos = array();
-        foreach ($result as $res)
-        {
-            $listaPedido = new ListaPedido();
-            $produto = new Produto();
-            
-            $listaPedido->setLista_pedido_pk( $res["lista_pedido_pk"] );
-            $listaPedido->setLista_pedido_pedido_fk( $res["lista_pedido_pedido_fk"] );
-            
-            $produto->setPk( $res["lista_pedido_produto_id"] );
-            $produto->setNome( $res["lista_pedido_produto_nome"] );
-            $produto->setValor( $res["lista_pedido_produto_valor"] );
-            $listaPedido->setLista_pedido_produto( $produto );
-            
-            $listaPedido->setLista_pedido_quantidade( $res["lista_pedido_quantidade"] );
-            $listaPedido->setLista_pedido_subtotal( $res["lista_pedido_subtotal"] );
-            
-            array_push($listaPedidos, $listaPedido);
-        }
-        return $listaPedidos;
-        
+        return $this->arrayObjRecebimento($result);
     }
     
     
