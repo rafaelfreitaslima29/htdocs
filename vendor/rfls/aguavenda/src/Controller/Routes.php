@@ -30,21 +30,15 @@ class Routes
     
     private $clienteDao;
     
-   
-    
-    
-    
     function __construct()
     {
         $this->app = new App();
-        
         $this->tpl = new Tpl();
-        
-       
-        
+        // Rotas
         $this->routeHome();
         $this->routeVenda();
         $this->routeRecebimento();
+        $this->routeRecebimentoReceber();
         $this->routeCliente();
         $this->routeClienteConfirm();
         $this->routeRelatorio();
@@ -85,6 +79,22 @@ class Routes
             $pagina = new Pagina();
             
             $pagina->setTpl("recebimento");
+            
+        });
+    }
+    
+    
+    // Configuração da Rota recebimento "\recebimento"
+    public function routeRecebimentoReceber()
+    {
+        $this->app->any('/recebimento-receber', function ($request, $response, $args) {
+            
+            $pagina = new Pagina();
+            
+            
+            
+            // último comando
+            $pagina->setTpl("recebimento_receber");
             
         });
     }
