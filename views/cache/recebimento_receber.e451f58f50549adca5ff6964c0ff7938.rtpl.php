@@ -11,8 +11,6 @@
 	      		</div>   	
 				<!-- coluna 1 da esquerda início -->
 	      		<div class="col-md-6 mb-5">
-	      			
-	      			
 	      			<!-- form inicio -->
 	      			<form action="/cliente" method="get">
 						<div class="form-row">
@@ -32,19 +30,8 @@
 						</a>
 					<!-- form fim -->  	
 					</form>
-					
-					
 	      		<!-- coluna 1 da esquerda fim -->
-	      		</div>	      		
-	      		
-					
-					
-	      		
-	      		
-	      		
-	      		
-	      		
-	      			      		       	
+	      		</div>	   	      		       	
       	    <!-- row fim -->  
       		</div>
    	  <!-- conteiner fim --> 		    

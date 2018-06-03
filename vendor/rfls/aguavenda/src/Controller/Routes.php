@@ -37,12 +37,12 @@ class Routes
         // Rotas
         $this->routeHome();
         $this->routeVenda();
+        $this->routeVendaVender();
         $this->routeRecebimento();
         $this->routeRecebimentoReceber();
         $this->routeCliente();
         $this->routeClienteConfirm();
-        $this->routeRelatorio();
-        
+        $this->routeRelatorio();        
     }
     
     // Configuração da Rota home "\"
@@ -61,12 +61,27 @@ class Routes
     // Configuração da Rota Venda "\venda"
     public function routeVenda()
     {
-        $this->app->any('/venda', function ($request, $response, $args) {
-            
+        $this->app->any('/venda', function ($request, $response, $args) 
+        {            
             $pagina = new Pagina();
             
-            $pagina->setTpl("venda");
             
+            // último comando
+            $pagina->setTpl("venda");            
+        });
+    }
+    
+    
+    // Configuração da Rota Venda "\venda"
+    public function routeVendaVender()
+    {
+        $this->app->any('/venda-vender', function ($request, $response, $args) 
+        {            
+            $pagina = new Pagina();
+            
+            
+            // último comando
+            $pagina->setTpl("vanda_vender");            
         });
     }
     
@@ -74,12 +89,15 @@ class Routes
     // Configuração da Rota recebimento "\recebimento"
     public function routeRecebimento()
     {
-        $this->app->any('/recebimento', function ($request, $response, $args) {
-            
+        $this->app->any('/recebimento', function ($request, $response, $args) 
+        {            
             $pagina = new Pagina();
             
-            $pagina->setTpl("recebimento");
             
+            
+            
+            // último comando
+            $pagina->setTpl("recebimento");            
         });
     }
     

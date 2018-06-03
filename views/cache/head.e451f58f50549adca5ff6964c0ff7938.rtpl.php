@@ -7,6 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="shortcut icon" href="views/res/images/favico.jpg">
+    <script src="views/res/jquery/jquery-3.3.1.slim.min.js"></script>
     <title>ÁGUA SYSTEM</title>
 
     <!-- Bootstrap core CSS -->
@@ -43,6 +44,9 @@
           </li>
           <li class="nav-item active">
             <a class="nav-link" href="/relatorio">Relatórios</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/gerenciamento">Gerenciamento</a>
           </li>
           
         </ul>        
