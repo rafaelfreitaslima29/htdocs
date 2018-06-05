@@ -42,7 +42,8 @@ class Routes
         $this->routeRecebimentoReceber();
         $this->routeCliente();
         $this->routeClienteConfirm();
-        $this->routeRelatorio();        
+        $this->routeRelatorio();    
+        $this->routeGerenciamento();
     }
     
     // Configuração da Rota home "\"
@@ -371,6 +372,23 @@ class Routes
           
             
             $pagina->setTpl("relatorios");
+            
+        });
+    }
+    
+    
+    
+    // Configuração da Rota gerenciamento "\gerenciamento"
+    public function routeGerenciamento()
+    {
+        $this->app->any('/gerenciamento', function ($request, $response, $args) {
+            
+            $pagina = new Pagina();
+            
+            
+            
+            // último comando
+            $pagina->setTpl("gerenciamento");
             
         });
     }
