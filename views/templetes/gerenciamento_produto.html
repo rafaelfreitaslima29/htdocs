@@ -1,0 +1,83 @@
+<meta charset="UTF-8">
+	<!-- main inicio -->
+    <main role="main" class="container-fluid">
+    	<!-- conteiner inicio -->
+    	<div class="conteiner">
+	    	<!-- row inicio -->
+      		<div class="row">  
+      			<div class="col-md-12 mx-auto">     	
+					<h2 class="text-center mb-5">Gerenciamento de Produtos</h2>
+	      	    <!-- Título da página fim -->  
+	      		</div> 	
+	      		<!-- coluna 1 da esquerda início -->
+	      		<div class="col-md-6 mb-5">
+	      			<h2 class="text-center mb-2">Cadastrar Produto</h2>
+	      			<!-- form inicio -->
+	      			<form action="/gerenciamento-produto" method="get">
+						<div class="form-row">
+					    	<div class="col-md-12">
+					    		<label for="cliente">Nome do Produto</label>
+					      		<input type="text" class="form-control" placeholder="Nome do Produto" name="prod_name">
+					    	</div>
+					       	<div class="col-md-12">
+					       		<label for="cliente">Nome do Produto</label>
+					    	  	<input type="text" class="form-control" placeholder="Nome do Produto" name="prod_vlr">
+					    	</div>
+					  	</div>
+					  	<button type="submit" value="ok" name="botao_ok" class="btn btn-primary mt-3">Cadastrar</button>
+					  	<p>{$alerta}</p>
+					<!-- form fim -->  	
+					</form>
+	      		<!-- coluna 1 da esquerda fim -->
+	      		</div>	      		
+	      		
+	      		  	
+				<!-- coluna 2 da direita início -->
+	      		<div class="col-md-6">
+					
+					<h2 class="text-center mb-2">Produtos Cadastrados</h2>
+					<!-- tabela responsiva inicio -->
+					<div class="table-responsive-sm">
+					  	<table class="table table-hover table-dark">
+							  <thead>
+							    <tr>							      
+							      <th scope="col">Nome</th>
+							      <th scope="col">Valor</th>
+							      <th scope="col">Alterar</th>							      
+							    </tr>
+							  </thead>
+							  <tbody>							  
+								  {loop="$listprodutos"}
+								  <tr>							      
+								      <td>{$value->getNome()}</td>
+								      <td>{$value->getValor()}</td>
+								      <td class="align-middle">
+								      	<div class="btn mx-auto" role="group" aria-label="Basic example">
+											<a class="btn btn-primary btn-sm" href="/gerenciamento-produto-alterar?id_prod={$value->getPk()}" role="button">
+												<svg style="width:24px;height:24px" viewBox="0 0 24 24">
+												    <path fill="#ffffff" d="M16,5L19,8L18.5,8.5C19.5,9.5 20,10 20.5,9.5L22,11C22,12 20.5,13.5 19.5,13.5L18,12C18.5,11.5 18,11 17,10L16,11L13,8C14.5,6 13,4 9,5C10,4 11,3 12,3C12.5,3 14,3 16,5M2,20L4,22L14,12L12,10L2,20Z" />
+												</svg>
+											</a>														  				  
+										</div>
+								      </td>							      
+								    </tr>
+								    {/loop}							    
+							  </tbody>
+						</table>
+					<!-- tabela responsiva fim -->
+					</div>	
+	      		<!-- coluna 2 da direita fim -->
+	      		</div>       	
+      	    <!-- row fim -->  
+      		</div>
+   	  <!-- conteiner fim --> 		    
+      </div>
+    <!-- main fim -->  
+    </main>
+    
+    
+    
+    <script>
+    //alert("Existe campo vázio!");
+    </script>
+      

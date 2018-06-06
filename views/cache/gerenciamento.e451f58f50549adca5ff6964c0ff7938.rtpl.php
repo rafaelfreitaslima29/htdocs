@@ -20,16 +20,16 @@
 						      <span class="align-bottom">
 						      <h5 class="card-title">PRODUTOS</h5>
 						      <p class="card-text">Gerenciamento de Produtos</p>
-						      <a class="btn btn-warning btn-lg btn-block" href="/gerenciamento-produtos" role="button">ATUALIZAR</a>
+						      <a class="btn btn-warning btn-lg btn-block" href="/gerenciamento-produto" role="button">GERENCIAR</a>
 						      </span>					      
 						    </div>
 						 </div>				  
 						<div class="card">
-							<img class="card-img-top" src="/views/res/images/clientes.jpg" alt="Card image cap">
+							<img class="card-img-top" src="/views/res/images/clientes-1.png" alt="Card image cap">
 						    <div class="card-body">
 						      <h5 class="card-title">CLIENTES</h5>
-						      <p class="card-text">Gerenciamento de clientes</p>
-						      <a class="btn btn-warning btn-lg btn-block " href="/gerenciamento-clientes" role="button">ATUALIZAR</a>					      
+						      <p class="card-text">Gerenciamento de clientes [Não Implementado]</p>
+						      <a class="btn btn-warning btn-lg btn-block " href="/gerenciamento-clientes" role="button">GERENCIAR</a>					      
 						    </div>
 						 </div>
 					<!-- Grupo de cartões fim -->  

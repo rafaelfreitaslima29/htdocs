@@ -11,7 +11,8 @@
     <title>ÁGUA SYSTEM</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="views/res/bootstrap/css/bootstrap.min.css" rel="stylesheet">   
+    <link href="views/res/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="views/res/bootstrap/js/bootstrap.min.js"></script>   
     
     <style type="text/css">
     	body { padding-top: 4.5rem; min-height: 75rem;}

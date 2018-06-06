@@ -19,6 +19,8 @@ use Rfls\Model\Dao\ListaPedidoDao;
 use Rfls\Model\Entidades\ListaPedido;
 use Rfls\Model\Entidades\Recebimento;
 use Rfls\Model\Dao\RecebimentoDao;
+use Rfls\Model\ViewModel\GerenciamentoProdutoViewModel;
+use Rfls\Model\ViewModel\GerenciamentoProdutoAlterarViewModel;
 
 
 
@@ -44,6 +46,8 @@ class Routes
         $this->routeClienteConfirm();
         $this->routeRelatorio();    
         $this->routeGerenciamento();
+        $this->routeGerenciamentoProduto();
+        $this->routeGerenciamentoProdutoAlterar();
     }
     
     // Configuração da Rota home "\"
@@ -228,6 +232,12 @@ class Routes
           
             
             
+            $vmProduto = new GerenciamentoProdutoViewModel();
+            
+            $vmProduto->Teste();
+            
+            
+            /*
             $cli = new Client();
             $cli->setCli_pk_int(7);
             
@@ -253,7 +263,7 @@ class Routes
                 
                 
             }
-                
+              */  
                 
   //          var_dump($x);
             
@@ -392,6 +402,52 @@ class Routes
             
         });
     }
+    
+    
+    
+    // Configuração da Rota gerenciamento "\gerenciamento-produto"
+    public function routeGerenciamentoProduto()
+    {
+        $this->app->any('/gerenciamento-produto', function ($request, $response, $args) {
+            $pagina = new Pagina();
+            
+            // Para registrar um produto
+            $gerencProd = new GerenciamentoProdutoViewModel();
+            $gerencProd->cadastrarProduto($pagina);
+            
+            
+            // Para Listar os Produtos
+            $gerencProd->listaTodosOsProdutos($pagina);
+            
+            // último comando
+            $pagina->setTpl("gerenciamento_produto");
+            
+        });
+    }
+    
+    
+    // Configuração da Rota gerenciamento "\gerenciamento-produto"
+    public function routeGerenciamentoProdutoAlterar()
+    {
+        $this->app->any('/gerenciamento-produto-alterar', function ($request, $response, $args) {
+            $pagina = new Pagina();
+            
+            // Para registrar um produto
+            $gerencProd = new GerenciamentoProdutoAlterarViewModel();
+            $gerencProd->recuperarProduto($pagina);
+            
+            
+            // Para Listar os Produtos
+            //$gerencProd->listaTodosOsProdutos($pagina);
+            
+            // último comando
+            $pagina->setTpl("gerenciamento_produto_alterar");
+            
+        });
+    }
+    
+    
+    
     
     
     
