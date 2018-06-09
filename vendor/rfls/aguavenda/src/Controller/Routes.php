@@ -21,6 +21,9 @@ use Rfls\Model\Entidades\Recebimento;
 use Rfls\Model\Dao\RecebimentoDao;
 use Rfls\Model\ViewModel\GerenciamentoProdutoViewModel;
 use Rfls\Model\ViewModel\GerenciamentoProdutoAlterarViewModel;
+use Rfls\Model\ViewModel\VendaViewModel;
+use Rfls\Model\ViewModel\VendaVenderViewModel;
+use Rfls\Model\ViewModel\VendaFecharVendaViewModel;
 
 
 
@@ -36,15 +39,22 @@ class Routes
     {
         $this->app = new App();
         $this->tpl = new Tpl();
+       
         // Rotas
         $this->routeHome();
+        
         $this->routeVenda();
         $this->routeVendaVender();
+        $this->routeVendaFecharVenda();
+        
         $this->routeRecebimento();
         $this->routeRecebimentoReceber();
+        
         $this->routeCliente();
         $this->routeClienteConfirm();
+        
         $this->routeRelatorio();    
+        
         $this->routeGerenciamento();
         $this->routeGerenciamentoProduto();
         $this->routeGerenciamentoProdutoAlterar();
@@ -70,6 +80,8 @@ class Routes
         {            
             $pagina = new Pagina();
             
+            $vendaViewModel = new VendaViewModel();
+            $vendaViewModel->pesquisarCliente($pagina);
             
             // último comando
             $pagina->setTpl("venda");            
@@ -84,11 +96,45 @@ class Routes
         {            
             $pagina = new Pagina();
             
+            $vendaVenderViewModel = new VendaVenderViewModel();
+            // Retorna os Dados do Cliente
+            $vendaVenderViewModel->retornarCliente($pagina);
+            
+            // Retorna a lista de Produtos
+            $vendaVenderViewModel->retornarListaProdutos($pagina);
+            
+            
             
             // último comando
             $pagina->setTpl("vanda_vender");            
         });
     }
+    
+    
+    
+    // Configuração da Rota Venda "\venda"
+    public function routeVendaFecharVenda()
+    {
+        $this->app->any('/vanda-fechar-venda', function ($request, $response, $args)
+        {
+            $pagina = new Pagina();
+            
+            $viewModel = new VendaFecharVendaViewModel();
+            // Retorna os Dados do Cliente
+            $viewModel->retornarCliente($pagina);
+            
+            //Retorna a lista de Produtos
+            $viewModel->retornarListaProdutos($pagina);
+            
+            //TESTE JSON
+            $viewModel->testeJONretornarListaProdutos($pagina);
+            
+            
+            // último comando
+            $pagina->setTpl("vanda_fechar_venda");
+        });
+    }
+    
     
     
     // Configuração da Rota recebimento "\recebimento"
@@ -437,8 +483,12 @@ class Routes
             $gerencProd->recuperarProduto($pagina);
             
             
-            // Para Listar os Produtos
-            //$gerencProd->listaTodosOsProdutos($pagina);
+            // Alterar Produto
+            $gerencProd->alterarProduto($pagina);
+            
+            // Deletar Produto
+            $gerencProd->deletarProduto($pagina);
+            
             
             // último comando
             $pagina->setTpl("gerenciamento_produto_alterar");

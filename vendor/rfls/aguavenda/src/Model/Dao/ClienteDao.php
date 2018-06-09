@@ -10,6 +10,7 @@ class ClienteDao extends AbstractDao
     public function incluir($client)
     {
         $cliente = new Client();
+        
         $cliente->setCli_name_text($client->getCli_name_text());
         $cliente->setCli_obs_text($client->getCli_obs_text());
         
@@ -65,9 +66,8 @@ class ClienteDao extends AbstractDao
         $stmt = $pdo->prepare("SELECT * FROM `tb_client` WHERE `cli_pk_int` = :cliid ORDER BY `cli_pk_int` DESC");
         $stmt->bindValue(":cliid",$cliente->getCli_pk_int());
         $stmt->execute();
-        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        //var_dump($result);
-        return $result;        
+        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);        
+        return $this->arrayObjeClientes($result);        
     }
     
     
@@ -78,16 +78,17 @@ class ClienteDao extends AbstractDao
         $cliente->setCli_name_text($client->getCli_name_text());
                 
         $pdo = $this->Sql();
-        // SELECT * FROM `tb_client` WHERE `cli_name_text` LIKE '%raf%' ORDER BY `cli_pk_int` DESC LIMIT 10
+        
         //$stmt = $pdo->prepare("SELECT * FROM `tb_client` WHERE `cli_name_text` LIKE '%".":clinome"."%' ORDER BY `cli_pk_int` DESC LIMIT 10");
         $stmt = $pdo->prepare("SELECT * FROM `tb_client` WHERE `cli_name_text` LIKE :clinome ORDER BY `cli_pk_int` DESC LIMIT ".$limitInt);
         $stmt->bindValue(":clinome","%".$cliente->getCli_name_text()."%");
-        //$stmt->bindValue(":limit",$limitInt);
+        
         $stmt->execute();
-        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        //var_dump($result);
-        return $result;
+        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);        
+        return $this->arrayObjeClientes($result);
     }
+    
+    
 
     // Método para retornar tosdos os registros
     public function pesquisarTodos()
@@ -99,9 +100,35 @@ class ClienteDao extends AbstractDao
         $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         return $result;         
     }
+    
+    
+    
+    private function objCliente($cliente)
+    {
+        $objCliente = new Client();
+        $objCliente->setCli_pk_int( $cliente->getCli_pk_int() );
+        $objCliente->setCli_name_text( $cliente->getCli_name_text() );
+        $objCliente->setCli_obs_text( $cliente->getCli_obs_text() );
+        return $objCliente;
+    }
+
 
     
-    
+    private function arrayObjeClientes($result)
+    {
+        $clientes = array();
+        foreach ($result as $res)
+        {
+            $cliente = new Client();
+            $cliente->setCli_pk_int( $res["cli_pk_int"] );
+            $cliente->setCli_name_text( $res["cli_name_text"] );
+            $cliente->setCli_obs_text( $res["cli_obs_text"] );
+            
+            array_push($clientes, $cliente);
+        }
+        
+        return $clientes;  
+    }
     
    
     
