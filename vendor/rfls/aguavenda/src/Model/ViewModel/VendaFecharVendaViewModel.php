@@ -4,6 +4,11 @@ namespace Rfls\Model\ViewModel;
 use Rfls\Model\Dao\ClienteDao;
 use Rfls\Model\Entidades\Client;
 use Rfls\Model\Dao\ProdutoDao;
+use Rfls\Model\Entidades\Pedido;
+use Rfls\Model\Dao\PedidoDao;
+use Rfls\Model\Entidades\ListaPedido;
+use Rfls\Model\Dao\ListaPedidoDao;
+use Rfls\Model\Entidades\Produto;
 
 class VendaFecharVendaViewModel extends ClienteDao
 {   
@@ -32,27 +37,92 @@ class VendaFecharVendaViewModel extends ClienteDao
             $pagina->tplAssign("clinome", $cliente[0]->getCli_name_text() );
             $pagina->tplAssign("cliobs", $cliente[0]->getCli_obs_text() );            
         }
-        
-        
     }
     
     
-    
-    public function retornarListaProdutos($pagina)
+   
+    public function retornarListaProdutosDoPedido($pagina)
     {
-        $pagina->tplAssign("produtoslist", "" );
+        $pagina->tplAssign("cliid", "" );
+        $pagina->tplAssign("jsonquantidades", "" );
+        $pagina->tplAssign("jsonindices", "" );
         
-        $produtoDao = new ProdutoDao();
+        $cliId  =  isset( $_GET['id_cli'] ) ? $_GET['id_cli'] : false ;
+        $jsonQuantidades  =  isset( $_GET['json_quantidades'] ) ? $_GET['json_quantidades'] : false ;
+        $jsonIndices     =  isset( $_GET['json_indices'] ) ? $_GET['json_indices'] : false ;
         
-        $produtoLista = $produtoDao->pesquisarTodos();
-                
-        $pagina->tplAssign("produtoslist", $produtoLista );        
+        
+        
+        var_dump( $cliId );
+        var_dump( $jsonQuantidades );
+        var_dump( $jsonIndices );
+        
+        $jsonQuantidades = json_decode( $jsonQuantidades );
+        $jsonIndices = json_decode( $jsonIndices );
+        
+        
+        
+        // Criação de um pedido
+         // ############### ARRUMAR ESSA LÓGICA
+         $pedido = new Pedido();
+         $pedido->setPedido_client_fk( $cliId );
+         
+         $pedidoDao = new PedidoDao();
+         $pedido = $pedidoDao->crirPedido( $pedido );
+         
+         
+         $listaProdutoDao = new ListaPedidoDao();
+         $produtoDao = new ProdutoDao();
+         
+         foreach ($jsonIndices as $idProdutos)
+         {
+             $listaProduto = new ListaPedido();
+             $listaProduto->setLista_pedido_pedido_fk( $pedido->getPk() );
+             
+             $prduto = new Produto();
+             
+             $prduto->setPk( $idProdutos );
+             $prduto = $produtoDao->pesquisar( $prduto );
+             $subtotalProduto = ($prduto->getValor() * $jsonQuantidades);
+             
+             $listaProduto->setLista_pedido_produto( $prduto );
+             $listaProduto->setLista_pedido_quantidade( $jsonQuantidades );
+             $listaProduto->setLista_pedido_subtotal( $subtotalProduto );
+             $listaProdutoDao->incluir( $listaProduto );
+             
+             
+         }
+         
+        
+        
+        /*
+        foreach ( $jsonQuantidades as $x )
+        {
+            
+            echo $x;
+            echo "<br>";
+        }
+        */
+        
+       
+       
+       
+       /*
+        if( $jsonQuantidades == "" || $jsonIndices == "" )
+        {
+            echo "lista de Produtos vazia";
+        }
+        else
+        {
+            $pagina->tplAssign("jsonquantidades", $jsonQuantidades );
+            $pagina->tplAssign("jsonindices", $jsonIndices );
+        }
+        */               
     }
+       
     
     
-    
-    
-    public function testeJONretornarListaProdutos($pagina)
+    public function JONretornarListaProdutos($pagina)
     {
         $pagina->tplAssign("produtoslist", "" );
         

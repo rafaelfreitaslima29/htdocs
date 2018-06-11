@@ -123,12 +123,10 @@ class Routes
             // Retorna os Dados do Cliente
             $viewModel->retornarCliente($pagina);
             
-            //Retorna a lista de Produtos
-            $viewModel->retornarListaProdutos($pagina);
+            //Retorna a lista de Produtos em JSON
+            $viewModel->JONretornarListaProdutos($pagina);
             
-            //TESTE JSON
-            $viewModel->testeJONretornarListaProdutos($pagina);
-            
+            $viewModel->retornarListaProdutosDoPedido($pagina);
             
             // último comando
             $pagina->setTpl("vanda_fechar_venda");

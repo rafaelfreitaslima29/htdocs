@@ -70,8 +70,7 @@
 					
 	      			
 	      			<h4>Produtos do Pedido</h4>	
-	      			<button type="button" class="btn btn-danger btn-block mt-1 mb-1">APAGAR PEDIDO</button>
-	      			      			
+	      				      			      			
 	      			<!-- tabela responsiva inicio -->
 					<div class="table-responsive-sm">
 					  	<table class="table table-hover table-dark">
@@ -133,11 +132,11 @@ lista_itens["produto_valor"] = Array()
 			
 			if(quantidade_vazia == "")
 			{
-				console.log("tá vázia")
+				//console.log("tá vázia")
 			}
 			else
 			{
-				console.log("não tá vázia")
+				//console.log("não tá vázia")
 				
 				// Capta os valores dos input, com o id do produto e a quantidade deles
 				lista_itens["produto_id"].push( $("#selecao_produtos").val() );
@@ -176,8 +175,7 @@ lista_itens["produto_valor"] = Array()
 				// Envia as quantidades dos produtos para o input 
 				var quantidade_produtosJSON = JSON.stringify( lista_itens["produto_quantidade"] );
 				$("#json_quantidades").val(quantidade_produtosJSON);
-			}
-			
+			}			
 				
 			
 		// $("#adicionar").click(function() - fim	
