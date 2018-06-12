@@ -39,16 +39,25 @@
 							    </tr>
 							  </thead>
 							  <tbody id="tab_itens">
-							    <tr>							      							      
-								    <td></td>
-								    <td></td>
-								    <td></td>							      
-							    </tr>							    						    							    						    
+							    
+        								
+        							<?php $counter1=-1;  if( isset($listaprodutos) && ( is_array($listaprodutos) || $listaprodutos instanceof Traversable ) && sizeof($listaprodutos) ) foreach( $listaprodutos as $key1 => $value1 ){ $counter1++; ?>		
+        							<tr>
+        								<td><?php echo $value1->getLista_pedido_produto()->getNome(); ?> R$<?php echo $value1->getLista_pedido_produto()->getValor(); ?></td>
+        								<td><?php echo $value1->getLista_pedido_quantidade(); ?></td>	
+        								<td><?php echo $value1->getLista_pedido_subtotal(); ?></td>	
+        							</tr>		
+    								<?php } ?>
+							    							      							      
+								    
+								    
+								    						      
+							    							    						    							    						    
 							  </tbody>
 						</table>						
 					<!-- tabela responsiva fim -->
 					</div>
-					<h5>Total do Pedido R$ <span id="total_pedido">0.00</span> </h5>	
+					<h5>Total do Pedido R$ <span id="total_pedido"><?php echo $totalpedido; ?></span> </h5>	
 	      			
 	      			<a href="/" class="btn btn-primary mt-3 active" role="button" aria-pressed="true">
 							      		VOLTAR INICIO

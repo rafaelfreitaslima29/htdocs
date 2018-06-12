@@ -172,42 +172,13 @@ class Routes
     public function routeCliente()
     {
         $this->app->any('/cliente', function ($request, $response, $args) {
-            
             $pagina = new Pagina();
-                                           
-            // valida se tem as variáveis, se tiver faz a inclusão de novo cliente.
-            if(isset($_GET['cli_name']) && isset($_GET['cli_obs']))
-            {
-                $dao = $this->clienteDao = new ClienteDao();
-                $cliente = new Client();
-                
-                $cliente->setCli_name_text(strtoupper($_GET['cli_name']));
-                $cliente->setCli_obs_text($_GET['cli_obs']);
-                
-                $resultPesquisa = $dao->pesquisarNome($cliente, 1);
-                //var_dump($resultPesquisa[0]["cli_name_text"]);
-                //echo $resultPesquisa[0]["cli_name_text"];
-                
-                
-                if( $cliente->getCli_name_text() != "" && $cliente->getCli_name_text()!= $resultPesquisa[0]["cli_name_text"] )
-                {
-                    $dao->incluir($cliente);
-                    header( 'Location: /cliente' );
-                    exit;
-                }
-                else 
-                {
-                   // FAZER UM RETORNO CASO JÁ TENHA CADASTRADO O CLIENTE OU CAMPO EM BANCO
-                    $aviso = new Utilidades();
-                    //$alerta = $aviso->AlertaAvisoClient("Cliente já cadastrado ou campo em branco!");
-                    //echo $alerta;
-                    $pagina->tplAssign("alerta", "<h1>RRRRRr</h1>");
-                    
-                    $pagina->tplAssign("bom",utf8_encode ( "<h1>muito bom lá</h1>" ));
-                    
-                }
-            }
-            $pagina->setTpl("cadastro_cliente");
+            
+            
+            
+            
+            // último comando
+            $pagina->setTpl("cadastro_cliente");    
         });
     }
     
