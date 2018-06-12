@@ -24,6 +24,7 @@ use Rfls\Model\ViewModel\GerenciamentoProdutoAlterarViewModel;
 use Rfls\Model\ViewModel\VendaViewModel;
 use Rfls\Model\ViewModel\VendaVenderViewModel;
 use Rfls\Model\ViewModel\VendaFecharVendaViewModel;
+use Rfls\Model\ViewModel\CadastroClienteViewModel;
 
 
 
@@ -174,7 +175,13 @@ class Routes
         $this->app->any('/cliente', function ($request, $response, $args) {
             $pagina = new Pagina();
             
+            $viewModel = new CadastroClienteViewModel();
             
+            // testar a integração
+            //$viewModel->teste();
+            
+            // Lista cadastros recentes
+            $viewModel->ClienteCadastradosRecentes($pagina);
             
             
             // último comando
@@ -187,7 +194,7 @@ class Routes
     // Configuração da Rota Cadastro Cliente confirmação "/cliente/confirmado"
     public function routeClienteConfirm()
     {
-        $this->app->any('/cliConfirmado', function ($request, $response, $args) {
+        $this->app->any('/cliente-confirmado', function ($request, $response, $args) {
             
             $paginaCliConfirm = new Pagina();
             

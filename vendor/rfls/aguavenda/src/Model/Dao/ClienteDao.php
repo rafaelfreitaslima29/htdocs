@@ -14,13 +14,21 @@ class ClienteDao extends AbstractDao
         $cliente->setCli_name_text($client->getCli_name_text());
         $cliente->setCli_obs_text($client->getCli_obs_text());
         
-        $pdo = $this->Sql();
-       
-        $stmt = $pdo->prepare("INSERT INTO `tb_client` (`cli_pk_int`, `cli_name_text`, `cli_obs_text`) VALUES (NULL, :clinome, :cliobs)");
+        $sql= "CALL
+                sp_cliente_criar
+                (
+                :clinome,
+                :cliobs
+                )";        
         
+        $pdo = $this->Sql();       
+        $stmt = $pdo->prepare($sql);        
         $stmt->bindValue(":clinome",$cliente->getCli_name_text());
         $stmt->bindValue(":cliobs",$cliente->getCli_obs_text());
         $stmt->execute();
+        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);   
+        $cliente->setCli_pk_int( $result["last_insert_id()"] );
+        return $cliente;
     }
     
     
@@ -94,11 +102,36 @@ class ClienteDao extends AbstractDao
     public function pesquisarTodos()
     {
         $pdo = $this->Sql();
-        
-        $stmt = $pdo->prepare("SELECT * FROM `tb_client` ORDER BY `tb_client`.`cli_name_text` ASC");
+        $sql = "SELECT
+                 * 
+                FROM 
+                `tb_client` 
+                ORDER BY 
+                `tb_client`.`cli_name_text` 
+                ASC";
+        $stmt = $pdo->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        return $result;         
+        return $this->arrayObjeClientes($result);         
+    }
+    
+    
+    // Método para retornar 10 registros
+    public function pesquisar5Clientes()
+    {
+        $pdo = $this->Sql();
+        $sql = "SELECT 
+                * 
+                FROM 
+                `tb_client` 
+                ORDER BY 
+                `tb_client`.`cli_pk_int` 
+                DESC 
+                LIMIT 5";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $this->arrayObjeClientes($result);
     }
     
     
