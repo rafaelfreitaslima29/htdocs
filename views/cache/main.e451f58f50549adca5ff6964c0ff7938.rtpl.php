@@ -26,14 +26,14 @@
 					    <img class="card-img-top" src="/views/res/images/como-ganhar-dinheiro-de-vendas.png" alt="Card image cap">
 					    <div class="card-body">
 					      <h5 class="card-title">VENDAS</h5>
-					      <p class="card-text">Valor realizados com vendas hoje:<br><strong>R$25,55</strong></p>				      
+					      <p class="card-text">Valor realizados com vendas hoje:<br><strong>R$25,55[falta implementar]</strong></p>				      
 					    </div>
 					  </div>
 					  <div class="card">
 					    <img class="card-img-top" src="/views/res/images/recebimentos.jpg" alt="Card image cap">
 					    <div class="card-body">
 					      <h5 class="card-title">RECEBIMENTOS</h5>
-					      <p class="card-text">Valor recebidos hoje:<br><strong>R$33,75</strong></p>
+					      <p class="card-text">Valor recebidos hoje:<br><strong>R$33,75[falta implementar]</strong></p>
 					    </div>
 					  </div>
 					<!-- Grupo de cartões fim -->  

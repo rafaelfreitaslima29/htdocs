@@ -27,7 +27,7 @@ class ClienteDao extends AbstractDao
         $stmt->bindValue(":cliobs",$cliente->getCli_obs_text());
         $stmt->execute();
         $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);   
-        $cliente->setCli_pk_int( $result["last_insert_id()"] );
+        $cliente->setCli_pk_int( $result[0]["last_insert_id()"] );
         return $cliente;
     }
     

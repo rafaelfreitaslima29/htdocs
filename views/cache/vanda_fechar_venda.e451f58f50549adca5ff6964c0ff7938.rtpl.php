@@ -9,25 +9,12 @@
 					<h2 class="text-center mb-5">Venda Fechada</h2>					
 	      	    <!-- Título da página fim -->  
 	      		</div>   	
-				
-				
-				
-				
-				
-				
-				
 				<!-- coluna 2 da direita início -->
 	      		<div class="col-md-12 mb-5">
-	      			
 	      			<h4 id="venda_nome_cliente"><?php echo $clinome; ?>
 						<br><span><small><?php echo $cliobs; ?></small></span>
 					</h4>		
-			
-					
-	      			
-	      			<h4>Produtos do Pedido</h4>	
-	      				      			      
-	      				      			      			
+	      			<h4>Produtos do Pedido</h4>			
 	      			<!-- tabela responsiva inicio -->
 					<div class="table-responsive-sm">
 					  	<table class="table table-hover table-dark">
@@ -39,20 +26,13 @@
 							    </tr>
 							  </thead>
 							  <tbody id="tab_itens">
-							    
-        								
         							<?php $counter1=-1;  if( isset($listaprodutos) && ( is_array($listaprodutos) || $listaprodutos instanceof Traversable ) && sizeof($listaprodutos) ) foreach( $listaprodutos as $key1 => $value1 ){ $counter1++; ?>		
         							<tr>
         								<td><?php echo $value1->getLista_pedido_produto()->getNome(); ?> R$<?php echo $value1->getLista_pedido_produto()->getValor(); ?></td>
         								<td><?php echo $value1->getLista_pedido_quantidade(); ?></td>	
         								<td><?php echo $value1->getLista_pedido_subtotal(); ?></td>	
         							</tr>		
-    								<?php } ?>
-							    							      							      
-								    
-								    
-								    						      
-							    							    						    							    						    
+    								<?php } ?>						    						    							    						    
 							  </tbody>
 						</table>						
 					<!-- tabela responsiva fim -->
@@ -64,11 +44,7 @@
 					</a>
 	      			
 	      		<!-- coluna 2 da direita fim -->
-	      		</div>	   	      		       	
-				
-				
-				
-				
+	      		</div>	   	      		   
       	    <!-- row fim -->  
       		</div>
    	  <!-- conteiner fim --> 		    

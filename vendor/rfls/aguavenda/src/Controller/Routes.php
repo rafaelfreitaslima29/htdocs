@@ -25,6 +25,9 @@ use Rfls\Model\ViewModel\VendaViewModel;
 use Rfls\Model\ViewModel\VendaVenderViewModel;
 use Rfls\Model\ViewModel\VendaFecharVendaViewModel;
 use Rfls\Model\ViewModel\CadastroClienteViewModel;
+use Rfls\Model\ViewModel\CadastroClienteConfirmadoViewModel;
+use Rfls\Model\ViewModel\RecebimentoViewModel;
+use Rfls\Model\ViewModel\RecebimentoReceberViewModel;
 
 
 
@@ -50,6 +53,7 @@ class Routes
         
         $this->routeRecebimento();
         $this->routeRecebimentoReceber();
+        $this->routeRecebimentoReceberRecebido();
         
         $this->routeCliente();
         $this->routeClienteConfirm();
@@ -143,13 +147,15 @@ class Routes
         {            
             $pagina = new Pagina();
             
-            
+            $viewModel = new RecebimentoViewModel();
+            $viewModel->pesquisarCliente($pagina);
             
             
             // último comando
             $pagina->setTpl("recebimento");            
         });
     }
+    
     
     
     // Configuração da Rota recebimento "\recebimento"
@@ -159,7 +165,8 @@ class Routes
             
             $pagina = new Pagina();
             
-            
+            $viewModel = new RecebimentoReceberViewModel();
+            $viewModel->retornarCliente($pagina);
             
             // último comando
             $pagina->setTpl("recebimento_receber");
@@ -168,8 +175,25 @@ class Routes
     }
     
     
-    // Configuração da Rota Cadastro Cliente "/cliente"
-    // FALTA TERMINAR
+    
+    
+    public function routeRecebimentoReceberRecebido()
+    {
+        $this->app->any('/recebimento-receber-recebido', function ($request, $response, $args) {
+            
+            $pagina = new Pagina();
+            
+            
+            
+            // último comando
+            $pagina->setTpl("recebimento_receber_recebido");
+            
+        });
+    }
+    
+    
+    
+    
     public function routeCliente()
     {
         $this->app->any('/cliente', function ($request, $response, $args) {
@@ -196,45 +220,13 @@ class Routes
     {
         $this->app->any('/cliente-confirmado', function ($request, $response, $args) {
             
-            $paginaCliConfirm = new Pagina();
+            $pagina = new Pagina();
             
-            // Testes ===============
-            /*
-            $cliente = new Client();
-            //$cliente->setCli_name_text("ti");
-            //$cliente->setCli_obs_text("Samael");
-            //$cliente->setCli_pk_int("7");
+            $viewModel = new CadastroClienteConfirmadoViewModel();
+            $viewModel->cadastarCliente($pagina);
             
-            
-            $dao = $this->clienteDao = new ClienteDao();
-            $x = $dao->pesquisarNome($cliente);
-            var_dump($x);
-            echo "<br>". $x[0]["cli_pk_int"];
-            print_r($x);
-            echo "<br>";
-            echo $cliente->getCli_name_text();
-            
-            $aviso = new Utilidades();
-            $aviso->AlertaAvisoClient($client);
-            */
-            // =======================
-            
-            
-            // valida se tem as variáveis, se tiver faz a inclusão de novo cliente.
-            if(isset( $_GET['cli_name']) )
-            {
-                /*
-                $dao = $this->clienteDao = new ClienteDao();
-                $cliente = new Client();
-                
-                $cliente->setCli_name_text(strtoupper($_GET['cli_name']));
-                $cliente->setCli_obs_text($_GET['cli_obs']);
-                
-                $dao->incluir($cliente);
-                */
-            }
-            
-            $paginaCliConfirm->setTpl("cadastro_cliente_confirm");
+            // último comando
+            $pagina->setTpl("cadastro_cliente_confirm");
             
         });
     }

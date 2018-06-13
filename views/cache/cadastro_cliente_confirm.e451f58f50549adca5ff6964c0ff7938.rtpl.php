@@ -1,4 +1,4 @@
-
+<?php if(!class_exists('Rain\Tpl')){exit;}?>
 <meta charset="UTF-8">
 
     <main role="main" class="container-fluid">
@@ -12,9 +12,9 @@
       		<div class="row mt-5">
       			<div class="col-md-12 border border-success mx-auto">     	
 					<h5 class="text-center font-weight-bold">Nome do Cliente: </h5>
-					<p class="text-center font-weight-light text-uppercase">{$clientecadastrado->getCli_name_text()}</p>
+					<p class="text-center font-weight-light text-uppercase"><?php echo $clientecadastrado->getCli_name_text(); ?></p>
 					<h5 class="text-center font-weight-bold">Observação do Cliente: </h5>
-	      	      	<p class="text-center font-weight-light text-uppercase">{$clientecadastrado->getCli_obs_text()}</p>	      	      	
+	      	      	<p class="text-center font-weight-light text-uppercase"><?php echo $clientecadastrado->getCli_obs_text(); ?></p>	      	      	
 	      	      	
 	      		</div>
 	      		<a class="btn btn-primary btn-sm" href="/" role="button">

@@ -1,4 +1,4 @@
-
+<?php if(!class_exists('Rain\Tpl')){exit;}?>
 <meta charset="UTF-8">
 
     <main role="main" class="container-fluid">
@@ -6,15 +6,17 @@
     	<div class="conteiner">
       		<div class="row">     				
 				<div class="col-md-12">     	
-					<h4 class="text-center ">Cliente Cadastrado com Sucesso</h4>	      	      
+					<h4 class="text-center ">Pagamento Realizado com Sucesso</h4>	      	      
 	      		</div>
       		</div>
       		<div class="row mt-5">
-      			<div class="col-md-12 border border-success mx-auto">     	
-					<h5 class="text-center font-weight-bold">Nome do Cliente: </h5>
-					<p class="text-center font-weight-light text-uppercase">{$clientecadastrado->getCli_name_text()}</p>
-					<h5 class="text-center font-weight-bold">Observação do Cliente: </h5>
-	      	      	<p class="text-center font-weight-light text-uppercase">{$clientecadastrado->getCli_obs_text()}</p>	      	      	
+      			<div class="col-md-12 border border-success mx-auto">
+      				<h5 class="text-center font-weight-bold">Nome do Cliente: </h5>
+					<p class="text-center font-weight-light text-uppercase">Rafael | da vila</p>
+					<h5 class="text-center font-weight-bold">Valor Recebido: </h5>
+	      	      	<p class="text-center font-weight-light text-uppercase">R$25,555</p>
+	      	      	<h5 class="text-center font-weight-bold">Observação do Pagamento:</h5>
+	      	      	<p class="text-center font-weight-light text-uppercase">Data: 13-06-2018 | Pagamento de 2 águas</p>	      	      	
 	      	      	
 	      		</div>
 	      		<a class="btn btn-primary btn-sm" href="/" role="button">

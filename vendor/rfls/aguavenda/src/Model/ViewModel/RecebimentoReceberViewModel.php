@@ -5,7 +5,7 @@ use Rfls\Model\Dao\ClienteDao;
 use Rfls\Model\Entidades\Client;
 use Rfls\Model\Dao\ProdutoDao;
 
-class VendaVenderViewModel extends ClienteDao
+class RecebimentoReceberViewModel extends ClienteDao
 {   
     
     public function retornarCliente($pagina)
@@ -19,7 +19,7 @@ class VendaVenderViewModel extends ClienteDao
         $cliente = new Client();
         $cliente->setCli_pk_int( $cliId );
         $cliente = $this->pesquisar( $cliente );
-        //var_dump($cliente);
+       // var_dump($cliente);
         
         
         if( $cliente == null )
@@ -32,24 +32,10 @@ class VendaVenderViewModel extends ClienteDao
             $pagina->tplAssign("clinome", $cliente[0]->getCli_name_text() );
             $pagina->tplAssign("cliobs", $cliente[0]->getCli_obs_text() );            
         }
-        
-        
     }
     
     
-    
-    public function retornarListaProdutos($pagina)
-    {
-        $pagina->tplAssign("produtoslist", "" );
-        
-        $produtoDao = new ProdutoDao();
-        
-        $produtoLista = $produtoDao->pesquisarTodos();
-                
-        $pagina->tplAssign("produtoslist", $produtoLista );        
-    }
-    
-    
+   
    
     
     
