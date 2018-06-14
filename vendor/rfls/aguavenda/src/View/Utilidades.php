@@ -8,21 +8,25 @@ class Utilidades {
 
 
 
-    public function __construct($opcs = array()) 
-    { 
-    }
     
     
     
-    public function AlertaAvisoClient($texto)
+    public static function dataBR($dataInternacional)
     {
-        return "<meta charset=\"UTF-8\"><script>alert('".$texto."');</script>";
-       
+        $dataBR = $dataInternacional->format('d-m-Y H:i:s');        
         
+        return $dataBR; 
     }
     
+    
+    public static function valorBrToInter($valorBR)
+    {
+        $valorBR = str_replace( ",",  "." ,  $valorBR );
+        
+        return $valorBR;
+    }
 
-
+    
 
     public function __destruct() {
     

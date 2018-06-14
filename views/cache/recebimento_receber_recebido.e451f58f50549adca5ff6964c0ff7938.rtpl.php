@@ -12,11 +12,11 @@
       		<div class="row mt-5">
       			<div class="col-md-12 border border-success mx-auto">
       				<h5 class="text-center font-weight-bold">Nome do Cliente: </h5>
-					<p class="text-center font-weight-light text-uppercase">Rafael | da vila</p>
+					<p class="text-center font-weight-light text-uppercase"><?php echo $cliente["0"]->getCli_name_text(); ?> | <?php echo $cliente["0"]->getCli_obs_text(); ?></p>
 					<h5 class="text-center font-weight-bold">Valor Recebido: </h5>
-	      	      	<p class="text-center font-weight-light text-uppercase">R$25,555</p>
+	      	      	<p class="text-center font-weight-light text-uppercase">R$<?php echo $recebimento->getValor(); ?></p>
 	      	      	<h5 class="text-center font-weight-bold">Observação do Pagamento:</h5>
-	      	      	<p class="text-center font-weight-light text-uppercase">Data: 13-06-2018 | Pagamento de 2 águas</p>	      	      	
+	      	      	<p class="text-center font-weight-light text-uppercase">N#<?php echo $recebimento->getPk(); ?> | Data: <?php echo $recebimento->getData(); ?> | <?php echo $recebimento->getObs(); ?></p>	      	      	
 	      	      	
 	      		</div>
 	      		<a class="btn btn-primary btn-sm" href="/" role="button">

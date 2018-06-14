@@ -14,7 +14,7 @@
 	      		<div class="col-md-6 mb-5">
 	      			<a class="btn btn-primary btn-lg btn-block" href="/venda" role="button">REALIZAR VENDA</a>
 	      			<a class="btn btn-success btn-lg btn-block" href="/recebimento" role="button">REALIZAR RECEBIMENTO</a>
-	      			<a class="btn btn-info btn-lg btn-block" href="/relatorio" role="button">SALDO DO CLIENTE</a>
+	      			<a class="btn btn-info btn-lg btn-block" href="/relatorio-saldo-clientes" role="button">SALDO DO CLIENTE</a>
 	      			<a class="btn btn-warning btn-lg btn-block" href="/cliente" role="button">CADASTRAR NOVO CLIENTE</a>
 	      		<!-- coluna 1 da esquerda fim -->
 	      		</div>	      		

@@ -24,18 +24,49 @@ class RecebimentoDao extends AbstractDao
         $receb->setObs( $recebimento->getObs() );
         $receb->setData( $recebimento->getData() );
         
-        $sql = "INSERT INTO 
+        $sql = "CALL
+                sp_recebimento_registrar 
+                (
+                :valor,
+                :idcliente,
+                :observacao
+                )";
+        
+        $pdo = $this->Sql();
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue( ":idcliente", $receb->getCliente_fk() );
+        $stmt->bindValue( ":valor", $receb->getValor() );
+        $stmt->bindValue( ":observacao", $receb->getObs() );
+        $stmt->execute();
+        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $receb->setPk( $result[0]["last_insert_id()"]);
+        return $receb;
+        
+        
+    }
+    
+    
+    private  function recuperarUltimoGeristro($stmt)
+    {
+        $receb = new Recebimento();
+        $receb->setPk( $recebimento->getPk() );
+        $receb->setCliente_fk( $recebimento->getCliente_fk() );
+        $receb->setValor( $recebimento->getValor() );
+        $receb->setObs( $recebimento->getObs() );
+        $receb->setData( $recebimento->getData() );
+        
+        $sql = "SINSERT INTO
                 `tb_recebimento` (
-                    `recebimento_pk`, 
-                    `recebimento_cliente_fk`, 
-                    `recebimento_valor`, 
-                    `recebimento_obs`, 
-                    `recebimento_data`) 
+                    `recebimento_pk`,
+                    `recebimento_cliente_fk`,
+                    `recebimento_valor`,
+                    `recebimento_obs`,
+                    `recebimento_data`)
                 VALUES (
-                    NULL, 
-                    :idcliente, 
-                    :valor, 
-                    UPPER(:observacao), 
+                    NULL,
+                    :idcliente,
+                    :valor,
+                    UPPER(:observacao),
                     CURRENT_TIMESTAMP)";
         
         $pdo = $this->Sql();
@@ -177,6 +208,29 @@ class RecebimentoDao extends AbstractDao
         
         return $this->arrayObjRecebimento($result);
     }
+    
+    public function pesquisarSaldoRecebimentosDoCliente($recebimento)
+    {
+        
+        $sql = "SELECT 
+                SUM(recebimento_valor) 
+                as 'saldo_total_recebido' 
+                FROM 
+                tb_recebimento 
+                WHERE 
+                recebimento_cliente_fk = :clienteid";
+        
+        $pdo = $this->Sql();
+        
+        // SELECT * FROM `tb_pedido` ORDER BY `tb_pedido`.`pedido_data` DESC
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue( ":clienteid", $recebimento->getCliente_fk() );
+        $stmt->execute();
+        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $saldo = $result[0]["saldo_total_recebido"];
+        
+        return $saldo;
+    }   
     
     
     

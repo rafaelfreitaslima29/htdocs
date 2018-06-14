@@ -6,7 +6,7 @@
 	    	<!-- row inicio -->
       		<div class="row">  
       			<div class="col-md-12 mx-auto">     	
-					<h2 class="text-center mb-5">Recebimento</h2>
+					<h2 class="text-center mb-5">Saldo dos Clientes</h2>
 	      	    <!-- Título da página fim -->  
 	      		</div>   	
 				<!-- coluna 1 da esquerda início -->

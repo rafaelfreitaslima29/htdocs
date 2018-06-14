@@ -166,6 +166,27 @@ class PedidoDao extends AbstractDao
             array_push($pedidos, $pedido);
         }        
         return $pedidos;   
+    }
+    
+    
+    public function pesquisarSaldoPedidosDoCliente($pedido)
+    {
+        
+        $sql = "SELECT 
+                SUM(pedido_saldo_total) as 'saldo_total_pedidos' 
+                FROM 
+                tb_pedido 
+                WHERE pedido_client_fk = :clienteid";
+        $pdo = $this->Sql();
+        
+        // SELECT * FROM `tb_pedido` ORDER BY `tb_pedido`.`pedido_data` DESC
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue( ":clienteid", $pedido->getPedido_client_fk() );
+        $stmt->execute();
+        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $saldo = $result[0]["saldo_total_pedidos"];
+        
+        return $saldo;
     }   
     
     

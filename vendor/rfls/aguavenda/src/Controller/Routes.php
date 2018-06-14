@@ -28,6 +28,8 @@ use Rfls\Model\ViewModel\CadastroClienteViewModel;
 use Rfls\Model\ViewModel\CadastroClienteConfirmadoViewModel;
 use Rfls\Model\ViewModel\RecebimentoViewModel;
 use Rfls\Model\ViewModel\RecebimentoReceberViewModel;
+use Rfls\Model\ViewModel\RecebimentoReceberRecebidoViewModel;
+use Rfls\Model\ViewModel\RelatorioSaldoClientesViewModel;
 
 
 
@@ -59,6 +61,7 @@ class Routes
         $this->routeClienteConfirm();
         
         $this->routeRelatorio();    
+        $this->routeRelatorioSaldoClientes();
         
         $this->routeGerenciamento();
         $this->routeGerenciamentoProduto();
@@ -183,6 +186,9 @@ class Routes
             
             $pagina = new Pagina();
             
+            $viewModel = new RecebimentoReceberRecebidoViewModel();
+            $viewModel->retornarCliente($pagina);
+            
             
             
             // último comando
@@ -242,160 +248,29 @@ class Routes
         $this->app->any('/relatorio', function ($request, $response, $args) {
             $pagina = new Pagina();
             
-            // #########TESTE ############
-          
             
             
-            $vmProduto = new GerenciamentoProdutoViewModel();
             
-            $vmProduto->Teste();
-            
-            
-            /*
-            $cli = new Client();
-            $cli->setCli_pk_int(7);
-            
-            $receb = new Recebimento();
-            $receb->setPk(4);
-            $receb->setCliente_fk( 22 );
-            $receb->setValor(120.60);
-            $receb->setObs("teste 333");
-            
-            $recebDao = new RecebimentoDao();
-            $x = new Recebimento();
-            
-            
-           
-            $xy = $recebDao->pesquisarTodosPorCliente($receb);
-            foreach ($xy as $x)
-            {
-                echo $x->getPk()."  |  ";
-                echo $x->getCliente_fk()."  |  ";
-                echo $x->getData()."  |  ";
-                echo $x->getObs()."  |  ";
-                echo $x->getValor()."  |  ";
                 
-                
-            }
-              */  
-                
-  //          var_dump($x);
-            
-            
-            
-            
-            
-            
-            
-            
-            
-          //$produtoDao = new ProdutoDao();
-          
-          //$produto = new Produto();
-          //$produto->setPk(2);
-          
-          
-         // $prod = $produtoDao->pesquisar($produto);
-          
-          //echo $prod->getPk();
-          //echo $prod->getNome();
-          //echo $prod->getValor();
-          
-          //$quantidade = 5;
-          
-          //$listaPedido = new ListaPedido();
-          //$listaPedido->setLista_pedido_pk(1);
-          //$listaPedido->setLista_pedido_pedido_fk(1);
-          //$listaPedido->setLista_pedido_produto($prod);
-          
-          //$listaPedido->setLista_pedido_quantidade($quantidade);
-          //$listaPedido->setLista_pedido_subtotal($quantidade * $prod->getValor());
-          /*
-          $ped = new Pedido();
-          $ped->setPk(2);
-          
-          $listaPedidoDao = new ListaPedidoDao();
-          $listPedido = $listaPedidoDao->pesquisarPorPedido($ped);
-          foreach ($listPedido as $list)
-          {
-              
-              $pro = new Produto();
-              
-              echo $list->getLista_pedido_pk()." | ";
-              echo $list->getLista_pedido_pedido_fk()." | ";
-              $pro = $list->getLista_pedido_produto();
-              
-              echo $pro->getPk()." | ";
-              echo $pro->getNome()." | ";
-              echo $pro->getValor()." | ";
-              
-              echo $list->getLista_pedido_quantidade()." | ";
-              echo $list->getLista_pedido_subtotal()." | ";
-              echo "<br>";
-              
-                         
-          }
-          */
-          
-          
-          /*
-          $pro = new Produto();
-          
-          echo $listPedido->getLista_pedido_pk()." | ";
-          echo $listPedido->getLista_pedido_pedido_fk()." | ";
-          $pro = $listPedido->getLista_pedido_produto();
-          
-          echo $pro->getPk()." | ";
-          echo $pro->getNome()." | ";
-          echo $pro->getValor()." | ";
-          
-          echo $listPedido->getLista_pedido_quantidade()." | ";
-          echo $listPedido->getLista_pedido_subtotal()." | ";
-          */
-          
-          
-          // 
-            //$pedido = new Pedido();
-            //$pedido->setPedido_client_fk(5);
-            //$pedido->setPedido_estado(2);
-            //$pedido->setPk(3);
-            //$pedido->setPedido_saldo_total(32.55);
-            
-            
-            //$pedidoDao = new PedidoDao();
-            
-            
-            // $pedidoDao->incluir($pedido);
-            // $pedidoDao->alterar($pedido);
-            // $pedidoDao->deletar($pedido);
-            //$ped = $pedidoDao->pesquisarTodos();
-            
-           
-            //var_dump($ped);
-            
-            /*
-            foreach ($ped as $p){
-            
-                echo $p->getPk()."<br>";
-                echo $p->getPedido_client_fk()."<br>";
-                echo $p->getPedido_data()."<br>";
-                echo $p->getPedido_estado()."<br>";
-                echo $p->getPedido_saldo_total()."<br>";
-                
-            }
-            */
-            /*
-            echo $ped->getPk()."<br>";
-            echo $ped->getPedido_client_fk()."<br>";
-            echo $ped->getPedido_data()."<br>";
-            echo $ped->getPedido_estado()."<br>";
-            echo $ped->getPedido_saldo_total()."<br>";
-            */
-           
-            // ###########################
-          
-            
+            // Último comando
             $pagina->setTpl("relatorios");
+            
+        });
+    }
+    
+    public function routeRelatorioSaldoClientes()
+    {
+        $this->app->any('/relatorio-saldo-clientes', function ($request, $response, $args) {
+            $pagina = new Pagina();
+            
+            $viewModel = new RelatorioSaldoClientesViewModel();
+            
+            $viewModel->saldoPedidosCliente($pagina);
+            
+            
+            
+            // Último comando
+            $pagina->setTpl("relatorio_saldo_clientes");
             
         });
     }

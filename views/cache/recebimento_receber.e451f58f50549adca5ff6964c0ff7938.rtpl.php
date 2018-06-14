@@ -24,7 +24,7 @@
 					    		<label for="cliente">Valor</label>
 					      		<input type="text" id="receber_cli_valor" name="receber_cli_valor" class="form-control" placeholder="Valor" >
 					      		<label for="cliente">Observação do Recebimento</label>
-					      		<input type="text" class="form-control" placeholder="Observação do Recebimento" name="receber_cli_obs">
+					      		<input type="text" name="receber_cli_obs" class="form-control" placeholder="Observação do Recebimento" >
 					    	</div>					       	
 					  	</div>
 					  	<button type="submit" id="receber" class="btn btn-primary mt-3">RECEBER</button>
@@ -41,17 +41,14 @@
       </div>
     <!-- main fim -->  
     </main>
+
       
 <script>
-
-
 
 	$(document).ready(function(){
 	
 		// faz o botaão de cadastrar sumir
 		$("#receber").hide();
-		
-				
 		
 		$("#receber_cli_valor").focusout(function(){
 			
