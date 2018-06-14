@@ -45,7 +45,7 @@ class RecebimentoDao extends AbstractDao
         
     }
     
-    
+/*    
     private  function recuperarUltimoGeristro($stmt)
     {
         $receb = new Recebimento();
@@ -76,6 +76,7 @@ class RecebimentoDao extends AbstractDao
         $stmt->bindValue( ":observacao", $receb->getObs() );
         $stmt->execute();
     }
+  */
     
     
     /**
