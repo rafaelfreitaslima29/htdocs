@@ -21,21 +21,21 @@ class Utilidades {
     
     public static function valorBrToInter($valorBR)
     {
-        $valorBR = str_replace( ",",  "." ,  $valorBR );
-        
+        if($valorBR == "")
+        {
+            $valorBR = 0.00;
+            number_format ( $valorBR , 2 );
+        }
+        else 
+        {
+            $valorBR = str_replace( ",",  "." ,  $valorBR );
+            
+            $valorBR = number_format ( $valorBR , 2 );            
+        }
         return $valorBR;
     }
 
     
-
-    public function __destruct() {
-    
-        
-    }
-
-
-
-
 
 }
 

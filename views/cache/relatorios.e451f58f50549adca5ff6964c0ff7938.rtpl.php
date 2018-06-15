@@ -1,42 +1,25 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?><meta charset="UTF-8">
-
-
+    <!--  main início -->
     <main role="main" class="container-fluid">
-    
-    	<div class="conteiner">
-      		
-      		
-      		<div class="row">     	
-			
+    	<!--  div class="conteiner" início -->
+    	<div class="conteiner">      		
+      		<!--  div class="row" inicio  -->
+      		<div class="row">     				
 				<div class="col-md-12">     	
-					<h2>Relatório</h2>
-	      	      
+					<h2 class="text-center mb-5">Relatório</h2>	      	      
+	      		</div>	      	
+	      		<div class="col-md-6">     		      			
+					<a class="btn btn-info btn-lg btn-block" href="/relatorio-saldo-clientes" role="button">SALDO DO CLIENTE</a>
+					<a class="btn btn-secondary btn-lg btn-block" href="#" role="button">VENDAS DO DIA <i>[Não implementado]</i></a>
+					<a class="btn btn-secondary btn-lg btn-block" href="#" role="button">VENDAS DO MÊS<i>[Não implementado]</i></a>
+					<a class="btn btn-secondary btn-lg btn-block" href="#" role="button">VENDAS DO ANO<i>[Não implementado]</i></a>
+					<a class="btn btn-secondary btn-lg btn-block" href="#" role="button">VENDAS DO ANOS ANTERIORES<i>[Não implementado]</i></a>	      	      
 	      		</div>
-	      	
-			
-			
-	      		<div class="col-md-6">     	
-					<p>Lorem água ipsum dolor sit amet, consectetur adipiscing elit. In iaculis rutrum nisl, vitae semper dui. Donec faucibus ut eros eu lacinia. Nam gravida, massa lacinia tincidunt cursus, mauris augue mattis felis, at lacinia lectus libero et augue. Morbi a eleifend justo. Donec quis elit leo. Mauris posuere lobortis sapien, id auctor felis sollicitudin sed. Nam nisi felis, hendrerit ut justo non, semper vestibulum neque. Mauris sed maximus justo. Vestibulum vel magna a augue vulputate mattis. Etiam ultrices volutpat nunc ac vestibulum. Morbi lacinia libero sed ornare tempor. Praesent eleifend finibus erat at hendrerit. Aenean ultricies, nibh sit amet commodo faucibus, ante odio condimentum leo, eu convallis lacus tortor eu libero. Donec placerat lectus a nisi volutpat, non rhoncus urna feugiat. Phasellus ullamcorper sapien in velit fermentum, nec convallis ex convallis. Nunc ornare, ex sit amet aliquet suscipit, massa justo laoreet sapien, ut tempor lectus ipsum ac arcu. Praesent ut nisl quis eros congue commodo non vel ipsum. Sed consectetur tellus sed eros consectetur pellentesque. Donec pharetra velit erat, sed varius ex commodo fermentum. Donec suscipit, dui sed viverra faucibus, mi leo convallis leo, consectetur dignissim elit nibh sed augue. Quisque venenatis augue sapien, nec tempor magna mollis vitae. Aenean rhoncus massa fringilla enim luctus tempor. Aliquam quis eros mi. Donec sit amet laoreet dui. Donec tempor, libero sit amet convallis volutpat, nunc erat condimentum metus, vel laoreet nisl dui eu ligula. Proin blandit ligula libero, eget mattis ex auctor in.</p>
-	      	      
+	      		<div class="col-md-6">
 	      		</div>
-	      	
-	      		<div class="col-md-6">     	
-	      			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In iaculis rutrum nisl, vitae semper dui. Donec faucibus ut eros eu lacinia. Nam gravida, massa lacinia tincidunt cursus, mauris augue mattis felis, at lacinia lectus libero et augue. Morbi a eleifend justo. Donec quis elit leo. Mauris posuere lobortis sapien, id auctor felis sollicitudin sed. Nam nisi felis, hendrerit ut justo non, semper vestibulum neque. Mauris sed maximus justo. Vestibulum vel magna a augue vulputate mattis. Etiam ultrices volutpat nunc ac vestibulum. Morbi lacinia libero sed ornare tempor. Praesent eleifend finibus erat at hendrerit. Aenean ultricies, nibh sit amet commodo faucibus, ante odio condimentum leo, eu convallis lacus tortor eu libero. Donec placerat lectus a nisi volutpat, non rhoncus urna feugiat. Phasellus ullamcorper sapien in velit fermentum, nec convallis ex convallis. Nunc ornare, ex sit amet aliquet suscipit, massa justo laoreet sapien, ut tempor lectus ipsum ac arcu. Praesent ut nisl quis eros congue commodo non vel ipsum. Sed consectetur tellus sed eros consectetur pellentesque. Donec pharetra velit erat, sed varius ex commodo fermentum. Donec suscipit, dui sed viverra faucibus, mi leo convallis leo, consectetur dignissim elit nibh sed augue. Quisque venenatis augue sapien, nec tempor magna mollis vitae. Aenean rhoncus massa fringilla enim luctus tempor. Aliquam quis eros mi. Donec sit amet laoreet dui. Donec tempor, libero sit amet convallis volutpat, nunc erat condimentum metus, vel laoreet nisl dui eu ligula. Proin blandit ligula libero, eget mattis ex auctor in.</p>
-	      		</div>
-        	
-      	      
+      	    <!--  div class="row" fim  -->  
       		</div>
-      	
-      		
-      		    
-      </div>
-      
-      
-       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In iaculis rutrum nisl, vitae semper dui. Donec faucibus ut eros eu lacinia. Nam gravida, massa lacinia tincidunt cursus, mauris augue mattis felis, at lacinia lectus libero et augue. Morbi a eleifend justo. Donec quis elit leo. Mauris posuere lobortis sapien, id auctor felis sollicitudin sed. Nam nisi felis, hendrerit ut justo non, semper vestibulum neque. Mauris sed maximus justo. Vestibulum vel magna a augue vulputate mattis. Etiam ultrices volutpat nunc ac vestibulum. Morbi lacinia libero sed ornare tempor. Praesent eleifend finibus erat at hendrerit. Aenean ultricies, nibh sit amet commodo faucibus, ante odio condimentum leo, eu convallis lacus tortor eu libero.
-
-Donec placerat lectus a nisi volutpat, non rhoncus urna feugiat. Phasellus ullamcorper sapien in velit fermentum, nec convallis ex convallis. Nunc ornare, ex sit amet aliquet suscipit, massa justo laoreet sapien, ut tempor lectus ipsum ac arcu. Praesent ut nisl quis eros congue commodo non vel ipsum. Sed consectetur tellus sed eros consectetur pellentesque. Donec pharetra velit erat, sed varius ex commodo fermentum. Donec suscipit, dui sed viverra faucibus, mi leo convallis leo, consectetur dignissim elit nibh sed augue. Quisque venenatis augue sapien, nec tempor magna mollis vitae. Aenean rhoncus massa fringilla enim luctus tempor. Aliquam quis eros mi. Donec sit amet laoreet dui. Donec tempor, libero sit amet convallis volutpat, nunc erat condimentum metus, vel laoreet nisl dui eu ligula. Proin blandit ligula libero, eget mattis ex auctor in.</p>
-      
-      
+      <!--  div class="conteiner" fim -->		    
+      </div>          
+    <!--  main fim -->  
     </main>
-    
-  
