@@ -1,383 +1,337 @@
 <?php
 /**
- * Slim Framework (http://slimframework.com)
+ * Slim - a micro PHP 5 framework
  *
- * @link      https://github.com/slimphp/Slim
- * @copyright Copyright (c) 2011-2015 Josh Lockhart
- * @license   https://github.com/slimphp/Slim/blob/3.x/LICENSE.md (MIT License)
+ * @author      Josh Lockhart <info@slimframework.com>
+ * @copyright   2011 Josh Lockhart
+ * @link        http://www.slimframework.com
+ * @license     http://www.slimframework.com/license
+ * @version     2.0.0
+ * @package     Slim
+ *
+ * MIT LICENSE
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 namespace Slim;
-
-use FastRoute\Dispatcher;
-use InvalidArgumentException;
-use RuntimeException;
-use Psr\Http\Message\ServerRequestInterface;
-use FastRoute\RouteCollector;
-use FastRoute\RouteParser;
-use FastRoute\RouteParser\Std as StdParser;
-use FastRoute\DataGenerator;
-use Slim\Interfaces\RouteGroupInterface;
-use Slim\Interfaces\RouterInterface;
-use Slim\Interfaces\RouteInterface;
 
 /**
  * Router
  *
- * This class organizes Slim application route objects. It is responsible
- * for registering route objects, assigning names to route objects,
- * finding routes that match the current HTTP request, and creating
- * URLs for a named route.
+ * This class organizes, iterates, and dispatches \Slim\Route objects.
+ *
+ * @package Slim
+ * @author  Josh Lockhart
+ * @since   1.0.0
  */
-class Router implements RouterInterface
+class Router implements \Iterator
 {
     /**
-     * Parser
-     *
-     * @var \FastRoute\RouteParser
+     * @var string Request URI
      */
-    protected $routeParser;
+    protected $resourceUri;
 
     /**
-     * Base path used in pathFor()
-     *
-     * @var string
+     * @var array Lookup hash of all route objects
      */
-    protected $basePath = '';
+    protected $routes;
 
     /**
-     * Routes
-     *
-     * @var Route[]
-     */
-    protected $routes = [];
-
-    /**
-     * Route counter incrementer
-     * @var int
-     */
-    protected $routeCounter = 0;
-
-    /**
-     * Named routes
-     *
-     * @var null|Route[]
+     * @var array Lookup hash of named route objects, keyed by route name (lazy-loaded)
      */
     protected $namedRoutes;
 
     /**
-     * Route groups
-     *
-     * @var RouteGroup[]
+     * @var array Array of route objects that match the request URI (lazy-loaded)
      */
-    protected $routeGroups = [];
+    protected $matchedRoutes;
 
     /**
-     * @var \FastRoute\Dispatcher
+     * @var mixed Callable to be invoked if no matching route objects are found
      */
-    protected $dispatcher;
+    protected $notFound;
 
     /**
-     * Create new router
-     *
-     * @param RouteParser   $parser
+     * @var mixed Callable to be invoked if application error
      */
-    public function __construct(RouteParser $parser = null)
+    protected $error;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
     {
-        $this->routeParser = $parser ?: new StdParser;
+        $this->routes = array();
     }
 
     /**
-     * Set the base path used in pathFor()
+     * Set Resource URI
      *
-     * @param string $basePath
+     * This method injects the current request's resource URI. This method should be invoked
+     * only immediately before router iteration.
      *
-     * @return self
+     * @param string $uri The request URI
      */
-    public function setBasePath($basePath)
+    public function setResourceUri($uri)
     {
-        if (!is_string($basePath)) {
-            throw new InvalidArgumentException('Router basePath must be a string');
-        }
-
-        $this->basePath = $basePath;
-
-        return $this;
+        $this->resourceUri = $uri;
     }
 
     /**
-     * Add route
-     *
-     * @param  string[] $methods Array of HTTP methods
-     * @param  string   $pattern The route pattern
-     * @param  callable $handler The route callable
-     *
-     * @return RouteInterface
-     *
-     * @throws InvalidArgumentException if the route pattern isn't a string
+     * Get Current Route object
+     * @return \Slim\Route|false
      */
-    public function map($methods, $pattern, $handler)
+    public function getCurrentRoute()
     {
-        if (!is_string($pattern)) {
-            throw new InvalidArgumentException('Route pattern must be a string');
+        $this->getMatchedRoutes(); // <-- Parse if not already parsed
+
+        return $this->current();
+    }
+
+    /**
+     * Return route objects that match the current request URI
+     * @param  bool                 $reload     Should matching routes be re-parsed?
+     * @return array[\Slim\Route]
+     */
+    public function getMatchedRoutes($reload = false)
+    {
+        if ($reload || is_null($this->matchedRoutes)) {
+            $this->matchedRoutes = array();
+            foreach ($this->routes as $route) {
+                if ($route->matches($this->resourceUri)) {
+                    $this->matchedRoutes[] = $route;
+                }
+            }
         }
 
-        // Prepend parent group pattern(s)
-        if ($this->routeGroups) {
-            $pattern = $this->processGroups() . $pattern;
-        }
+        return $this->matchedRoutes;
+    }
 
-        // According to RFC methods are defined in uppercase (See RFC 7231)
-        $methods = array_map("strtoupper", $methods);
-
-        // Add route
-        $route = new Route($methods, $pattern, $handler, $this->routeGroups, $this->routeCounter);
-        $this->routes[$route->getIdentifier()] = $route;
-        $this->routeCounter++;
+    /**
+     * Map a route object to a callback function
+     * @param  string     $pattern      The URL pattern (ie. "/books/:id")
+     * @param  mixed      $callable     Anything that returns TRUE for is_callable()
+     * @return \Slim\Route
+     */
+    public function map($pattern, $callable)
+    {
+        $route = new \Slim\Route($pattern, $callable);
+        $this->routes[] = $route;
 
         return $route;
     }
 
     /**
-     * Dispatch router for HTTP request
-     *
-     * @param  ServerRequestInterface $request The current HTTP request object
-     *
-     * @return array
-     *
-     * @link   https://github.com/nikic/FastRoute/blob/master/src/Dispatcher.php
+     * Get URL for named route
+     * @param  string               $name   The name of the route
+     * @param  array                Associative array of URL parameter names and replacement values
+     * @throws RuntimeException     If named route not found
+     * @return string               The URL for the given route populated with provided replacement values
      */
-    public function dispatch(ServerRequestInterface $request)
+    public function urlFor($name, $params = array())
     {
-        $uri = '/' . ltrim($request->getUri()->getPath(), '/');
-        
-        return $this->createDispatcher()->dispatch(
-            $request->getMethod(),
-            $uri
-        );
+        if (!$this->hasNamedRoute($name)) {
+            throw new \RuntimeException('Named route not found for name: ' . $name);
+        }
+        $search = array();
+        foreach (array_keys($params) as $key) {
+            $search[] = '#:' . $key . '\+?(?!\w)#';
+        }
+        $pattern = preg_replace($search, $params, $this->getNamedRoute($name)->getPattern());
+
+        //Remove remnants of unpopulated, trailing optional pattern segments
+        return preg_replace('#\(/?:.+\)|\(|\)#', '', $pattern);
     }
 
     /**
-     * @return \FastRoute\Dispatcher
+     * Dispatch route
+     *
+     * This method invokes the route object's callable. If middleware is
+     * registered for the route, each callable middleware is invoked in
+     * the order specified.
+     *
+     * This method is smart about trailing slashes on the route pattern.
+     * If the route's pattern is defined with a trailing slash, and if the
+     * current request URI does not have a trailing slash but otherwise
+     * matches the route's pattern, a Slim_Exception_RequestSlash
+     * will be thrown triggering an HTTP 301 Permanent Redirect to the same
+     * URI _with_ a trailing slash. This Exception is caught in the
+     * `Slim::call` loop. If the route's pattern is defined without a
+     * trailing slash, and if the current request URI does have a trailing
+     * slash, the route will not be matched and a 404 Not Found
+     * response will be sent if no subsequent matching routes are found.
+     *
+     * @param  \Slim\Route                  $route  The route object
+     * @return bool                         Was route callable invoked successfully?
+     * @throws \Slim\Exception\RequestSlash
      */
-    protected function createDispatcher()
+    public function dispatch(\Slim\Route $route)
     {
-        return $this->dispatcher ?: \FastRoute\simpleDispatcher(function (RouteCollector $r) {
-            foreach ($this->getRoutes() as $route) {
-                $r->addRoute($route->getMethods(), $route->getPattern(), $route->getIdentifier());
+        if (substr($route->getPattern(), -1) === '/' && substr($this->resourceUri, -1) !== '/') {
+            throw new Exception\RequestSlash();
+        }
+
+        //Invoke middleware
+        foreach ($route->getMiddleware() as $mw) {
+            if (is_callable($mw)) {
+                call_user_func_array($mw, array($route));
             }
-        }, [
-          'routeParser' => $this->routeParser
-        ]);
+        }
+
+        //Invoke callable
+        if (is_callable($route->getCallable())) {
+            call_user_func_array($route->getCallable(), array_values($route->getParams()));
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
-     * @param \FastRoute\Dispatcher $dispatcher
+     * Add named route
+     * @param  string            $name   The route name
+     * @param  \Slim\Route       $route  The route object
+     * @throws \RuntimeException If a named route already exists with the same name
      */
-    public function setDispatcher(Dispatcher $dispatcher)
+    public function addNamedRoute($name, \Slim\Route $route)
     {
-        $this->dispatcher = $dispatcher;
+        if ($this->hasNamedRoute($name)) {
+            throw new \RuntimeException('Named route already exists with name: ' . $name);
+        }
+        $this->namedRoutes[(string) $name] = $route;
     }
 
     /**
-     * Get route objects
-     *
-     * @return Route[]
+     * Has named route
+     * @param  string   $name   The route name
+     * @return bool
      */
-    public function getRoutes()
+    public function hasNamedRoute($name)
     {
-        return $this->routes;
+        $this->getNamedRoutes();
+
+        return isset($this->namedRoutes[(string) $name]);
     }
 
     /**
-     * Get named route object
-     *
-     * @param string $name        Route name
-     *
-     * @return Route
-     *
-     * @throws RuntimeException   If named route does not exist
+     * Get named route
+     * @param  string           $name
+     * @return \Slim\Route|null
      */
     public function getNamedRoute($name)
     {
+        $this->getNamedRoutes();
+        if ($this->hasNamedRoute($name)) {
+            return $this->namedRoutes[(string) $name];
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Get named routes
+     * @return \ArrayIterator
+     */
+    public function getNamedRoutes()
+    {
         if (is_null($this->namedRoutes)) {
-            $this->buildNameIndex();
-        }
-        if (!isset($this->namedRoutes[$name])) {
-            throw new RuntimeException('Named route does not exist for name: ' . $name);
-        }
-        return $this->namedRoutes[$name];
-    }
-
-    /**
-     * Process route groups
-     *
-     * @return string A group pattern to prefix routes with
-     */
-    protected function processGroups()
-    {
-        $pattern = "";
-        foreach ($this->routeGroups as $group) {
-            $pattern .= $group->getPattern();
-        }
-        return $pattern;
-    }
-
-    /**
-     * Add a route group to the array
-     *
-     * @param string   $pattern
-     * @param callable $callable
-     *
-     * @return RouteGroupInterface
-     */
-    public function pushGroup($pattern, $callable)
-    {
-        $group = new RouteGroup($pattern, $callable);
-        array_push($this->routeGroups, $group);
-        return $group;
-    }
-
-    /**
-     * Removes the last route group from the array
-     *
-     * @return RouteGroup|bool The RouteGroup if successful, else False
-     */
-    public function popGroup()
-    {
-        $group = array_pop($this->routeGroups);
-        return $group instanceof RouteGroup ? $group : false;
-    }
-
-    /**
-     * @param $identifier
-     * @return \Slim\Interfaces\RouteInterface
-     */
-    public function lookupRoute($identifier)
-    {
-        if (!isset($this->routes[$identifier])) {
-            throw new RuntimeException('Route not found, looks like your route cache is stale.');
-        }
-        return $this->routes[$identifier];
-    }
-
-    /**
-     * Build the path for a named route excluding the base path
-     *
-     * @param string $name        Route name
-     * @param array  $data        Named argument replacement data
-     * @param array  $queryParams Optional query string parameters
-     *
-     * @return string
-     *
-     * @throws RuntimeException         If named route does not exist
-     * @throws InvalidArgumentException If required data not provided
-     */
-    public function relativePathFor($name, array $data = [], array $queryParams = [])
-    {
-        $route = $this->getNamedRoute($name);
-        $pattern = $route->getPattern();
-
-        $routeDatas = $this->routeParser->parse($pattern);
-        // $routeDatas is an array of all possible routes that can be made. There is
-        // one routedata for each optional parameter plus one for no optional parameters.
-        //
-        // The most specific is last, so we look for that first.
-        $routeDatas = array_reverse($routeDatas);
-
-        $segments = [];
-        foreach ($routeDatas as $routeData) {
-            foreach ($routeData as $item) {
-                if (is_string($item)) {
-                    // this segment is a static string
-                    $segments[] = $item;
-                    continue;
+            $this->namedRoutes = array();
+            foreach ($this->routes as $route) {
+                if ($route->getName() !== null) {
+                    $this->addNamedRoute($route->getName(), $route);
                 }
-
-                // This segment has a parameter: first element is the name
-                if (!array_key_exists($item[0], $data)) {
-                    // we don't have a data element for this segment: cancel
-                    // testing this routeData item, so that we can try a less
-                    // specific routeData item.
-                    $segments = [];
-                    $segmentName = $item[0];
-                    break;
-                }
-                $segments[] = $data[$item[0]];
-            }
-            if (!empty($segments)) {
-                // we found all the parameters for this route data, no need to check
-                // less specific ones
-                break;
             }
         }
 
-        if (empty($segments)) {
-            throw new InvalidArgumentException('Missing data for URL segment: ' . $segmentName);
-        }
-        $url = implode('', $segments);
-
-        if ($queryParams) {
-            $url .= '?' . http_build_query($queryParams);
-        }
-
-        return $url;
-    }
-
-
-    /**
-     * Build the path for a named route including the base path
-     *
-     * @param string $name        Route name
-     * @param array  $data        Named argument replacement data
-     * @param array  $queryParams Optional query string parameters
-     *
-     * @return string
-     *
-     * @throws RuntimeException         If named route does not exist
-     * @throws InvalidArgumentException If required data not provided
-     */
-    public function pathFor($name, array $data = [], array $queryParams = [])
-    {
-        $url = $this->relativePathFor($name, $data, $queryParams);
-
-        if ($this->basePath) {
-            $url = $this->basePath . $url;
-        }
-
-        return $url;
+        return new \ArrayIterator($this->namedRoutes);
     }
 
     /**
-     * Build the path for a named route.
-     *
-     * This method is deprecated. Use pathFor() from now on.
-     *
-     * @param string $name        Route name
-     * @param array  $data        Named argument replacement data
-     * @param array  $queryParams Optional query string parameters
-     *
-     * @return string
-     *
-     * @throws RuntimeException         If named route does not exist
-     * @throws InvalidArgumentException If required data not provided
+     * Register a 404 Not Found callback
+     * @param  mixed    $callable   Anything that returns TRUE for is_callable()
+     * @return mixed
      */
-    public function urlFor($name, array $data = [], array $queryParams = [])
+    public function notFound($callable = null)
     {
-        trigger_error('urlFor() is deprecated. Use pathFor() instead.', E_USER_DEPRECATED);
-        return $this->pathFor($name, $data, $queryParams);
+        if (is_callable($callable)) {
+            $this->notFound = $callable;
+        }
+
+        return $this->notFound;
     }
 
     /**
-     * Build index of named routes
+     * Register a 500 Error callback
+     * @param  mixed    $callable   Anything that returns TRUE for is_callable()
+     * @return mixed
      */
-    protected function buildNameIndex()
+    public function error($callable = null)
     {
-        $this->namedRoutes = [];
-        foreach ($this->routes as $route) {
-            $name = $route->getName();
-            if ($name) {
-                $this->namedRoutes[$name] = $route;
-            }
+        if (is_callable($callable)) {
+            $this->error = $callable;
         }
+
+        return $this->error;
+    }
+
+    /**
+     * Iterator Interface: Rewind
+     */
+    public function rewind()
+    {
+        reset($this->matchedRoutes);
+    }
+
+    /**
+     * Iterator Interface: Current
+     * @return \Slim\Route|false
+     */
+    public function current()
+    {
+        return current($this->matchedRoutes);
+    }
+
+    /**
+     * Iterator Interface: Key
+     * @return int|null
+     */
+    public function key()
+    {
+        return key($this->matchedRoutes);
+    }
+
+    /**
+     * Iterator Interface: Next
+     */
+    public function next()
+    {
+        next($this->matchedRoutes);
+    }
+
+    /**
+     * Iterator Interface: Valid
+     * @return boolean
+     */
+    public function valid()
+    {
+        return $this->current();
     }
 }

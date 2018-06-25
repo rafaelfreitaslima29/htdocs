@@ -13,7 +13,8 @@
 	      		<div class="col-md-6 mb-5">
 	      			<h2 class="text-center mb-2">Cadastrar Produto</h2>
 	      			<!-- form inicio -->
-	      			<form action="/gerenciamento-produto" method="get">
+	      			<form action="/" method="get">
+						<input type="text" value="gerenciamento-produto" name="app" class="invisible d-none">
 						<div class="form-row">
 					    	<div class="col-md-12">
 					    		<label for="cliente">Nome do Produto</label>
@@ -25,7 +26,7 @@
 					    	</div>
 					  	</div>
 					  	<button type="submit" value="ok" name="botao_ok" class="btn btn-primary mt-3">Cadastrar</button>
-					  	<a href="/gerenciamento" class="btn btn-secondary mt-3 active" role="button" aria-pressed="true">VOLTAR</a>
+					  	<a href="/?app=gerenciamento" class="btn btn-secondary mt-3 active" role="button" aria-pressed="true">VOLTAR</a>
 					  	<p>{$alerta}</p>
 					<!-- form fim -->  	
 					</form>
@@ -54,7 +55,7 @@
 								      <td>{$value->getValor()}</td>
 								      <td class="align-middle">
 								      	<div class="btn mx-auto" role="group" aria-label="Basic example">
-											<a class="btn btn-primary btn-sm" href="/gerenciamento-produto-alterar?id_prod={$value->getPk()}" role="button">
+											<a class="btn btn-primary btn-sm" href="/?app=gerenciamento-produto-alterar&id_prod={$value->getPk()}" role="button">
 												<svg style="width:24px;height:24px" viewBox="0 0 24 24">
 												    <path fill="#ffffff" d="M16,5L19,8L18.5,8.5C19.5,9.5 20,10 20.5,9.5L22,11C22,12 20.5,13.5 19.5,13.5L18,12C18.5,11.5 18,11 17,10L16,11L13,8C14.5,6 13,4 9,5C10,4 11,3 12,3C12.5,3 14,3 16,5M2,20L4,22L14,12L12,10L2,20Z" />
 												</svg>
