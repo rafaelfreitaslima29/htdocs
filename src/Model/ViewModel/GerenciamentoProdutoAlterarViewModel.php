@@ -41,7 +41,7 @@ class GerenciamentoProdutoAlterarViewModel extends ProdutoDao
         {
             $produto = new Produto();
             $produto->setPk($idProduto);
-            $produto->setNome($nomeProduto);
+            $produto->setNome( strtoupper( utf8_decode( $nomeProduto ) ) );
             $produto->setValor
             (
                 str_replace( ","  ,  "."  , $valorProduto )

@@ -1,0 +1,169 @@
+=================================================================================================
+                                         Banco de Dados
+-------------------------------------------------------------------------------------------------
+// 20.04.2018 (OK) CRIAR TABELA tb_pedido 
+// 21.04.2018 (OK) FAZENDO A FORENKEY DA TABELA tb_pedido
+// 21.04.2018 (OK) TESTAR A FORENKEY DA TABELA tb_pedido
+// 26.04.2018 (OK) CRIAR TABELA tb_produto                                                   
+// 26.04.2018 (OK) CRIAR TABELA tb_lista_pedido           
+// 26.04.2018 (OK) FAZENDO A FORENKEY DA TABELA tb_lista_pedido
+// 26.04.2018 (OK) TESTAR A FORENKEY DA TABELA tb_lista_pedido 
+// 27.04.2018 (OK) ALTERAÇÃO NA TABELA tb_lista_pedido
+// 27.04.2018 (OK) ALTERAÇÃO NA TABELA tb_pedido
+// 07.05.2018 (OK) CRIAR TABELA tb_recebimento  
+// 00.00.2018 (  )   
+//
+ 
+=================================================================================================
+################################################################################################
+
+
+
+=================================================================================================
+                                           ENTIDADES
+-------------------------------------------------------------------------------------------------
+// ??.04.2018 (ok) CRIAÇÃO DA CLASSE Cliente
+// 27.04.2018 (ok) CRIAÇÃO DA CLASSE Produto
+// 06/05.2018 (OK) CRIAÇÃO DA CLASSE Pedido
+// 07.05.2018 (OK) CRIAÇÃO DA CLASSE ListaPedido
+// 00.00.2018 (OK) CRIAÇÃO DA CLASSE Recebimento 
+
+ 
+=================================================================================================
+################################################################################################
+
+
+
+=================================================================================================
+                                              DAO
+-------------------------------------------------------------------------------------------------
+// 04.04.2018 (Ok) CRIAÇÃO DA CLASSE ClienteDao 
+		//04.04.2018 (OK) IMPLEMENTAÇÃO DO MÉTODO INCLUIR DA CLASSE 
+		//05.04.2018 (OK) IMPLEMENTAÇÃO DO MÉTODO ALTERAR DA CLASSE 
+		//05.04.2018 (OK) IMPLEMENTAÇÃO DO MÉTODO DELETAR DA CLASSE 
+		//08.04.2018 (OK) IMPLEMENTAÇÃO DO MÉTODO PSQUISAR DA CLASSE 
+		//08.04.2018 (OK) IMPLEMENTAÇÃO DO MÉTODO PESQUISARTODOS DA CLASSE 
+// 17.05.2018 (Ok) CRIAÇÃO DA CLASSE produtoDao 
+		//27.04.2018 (OK) IMPLEMENTAÇÃO DO MÉTODO INCLUIR DA CLASSE produtoDao
+		//01.05.2018 (OK) IMPLEMENTAÇÃO DO MÉTODO ALTERAR DA CLASSE produtoDao
+		//01.05.2018 (OK) IMPLEMENTAÇÃO DO MÉTODO DELETAR DA CLASSE produtoDao
+		//08.05.2018 (OK) IMPLEMENTAÇÃO DO MÉTODO PSQUISAR DA CLASSE produtoDao
+		//00.00.2018 (OK) IMPLEMENTAÇÃO DO MÉTODO PESQUISARTODOS DA CLASSE produtoDao
+// 17/05/2018 (OK) CRIAÇÃO DA CLASSE PedidoDao
+		//21.05.2018 (OK) IMPLEMENTAÇÃO DO MÉTODO INCLUIR DA CLASSE 
+		//21.05.2018 (OK) IMPLEMENTAÇÃO DO MÉTODO ALTERAR DA CLASSE 
+		//21.05.2018 (OK) IMPLEMENTAÇÃO DO MÉTODO DELETAR DA CLASSE 
+		//21.05.2018 (OK) IMPLEMENTAÇÃO DO MÉTODO PSQUISAR DA CLASSE
+		//22.05.2018 (OK) IMPLEMENTAÇÃO DO MÉTODO PESQUISARTODOS DA CLASSE 
+// 17.05.2018 (OK) CRIAÇÃO DA CLASSE ListaPedidoDao
+		//22.05.2018 (OK) IMPLEMENTAÇÃO DO MÉTODO INCLUIR DA CLASSE 
+		//23.05.2018 (OK) IMPLEMENTAÇÃO DO MÉTODO ALTERAR DA CLASSE 
+		//23.05.2018 (OK) IMPLEMENTAÇÃO DO MÉTODO DELETAR DA CLASSE 
+		//24.05.2018 (OK) IMPLEMENTAÇÃO DO MÉTODO PSQUISAR DA CLASSE
+		//24.05.2018 (OK) IMPLEMENTAÇÃO DO MÉTODO PESQUISARTODOS DA CLASSE
+		//26.05.2018 (OK) IMPLEMENTAÇÃO DO MÉTODO PESQUISAR_POR_PEDIDO DA CLASSE
+// 17.05.2018 (OK) CRIAÇÃO DA CLASSE RecebimentoDao 
+		//26.05.2018 (OK) IMPLEMENTAÇÃO DO MÉTODO INCLUIR DA CLASSE 
+		//29.05.2018 (OK) IMPLEMENTAÇÃO DO MÉTODO ALTERAR DA CLASSE 
+		//29.05.2018 (OK) IMPLEMENTAÇÃO DO MÉTODO DELETAR DA CLASSE 
+		//29.05.2018 (OK) IMPLEMENTAÇÃO DO MÉTODO PSQUISAR DA CLASSE
+		//30.05.2018 (OK) IMPLEMENTAÇÃO DO MÉTODO PESQUISARTODOS DA CLASSE
+		//31.05.2018 (OK) IMPLEMENTAÇÃO DO MÉTODO PESQUISARTODOSPORCLIENTE DA CLASSE
+	
+	
+=================================================================================================
+ ################################################################################################
+
+
+
+=================================================================================================
+                                           VIEWMODEL
+-------------------------------------------------------------------------------------------------
+// 00.00.2018 (  ) CRIAÇÃO DA CLASSE HomeModel
+		// 00.00.2018 (  ) implementação do valor de venda diária
+		// 00.00.2018 (  ) implementação do valor de recebimento diária
+
+// 08.06.2018 (OK) CRIAÇÃO DA CLASSE VendaModel
+	// 09.06.2018 (OK) CRIAÇÃO DA CLASSE VendaVenderModel
+	// 11.06.2018 (OK) CRIAÇÃO DA CLASSE VendaFecharVendaModel  
+
+// 12.06.2018 (OK) CRIAÇÃO DA CLASSE RecebimentoModel 
+ 	// 13.06.2018 (OK) CRIAÇÃO DA CLASSE RecebimentoReceberModel 
+ 		// 13.06.2018 (OK) CRIAÇÃO DA CLASSE RecebimentoReceberRecebidoModel 
+
+// 12.06.2018 (OK) CRIAÇÃO DA CLASSE CadastrarClienteModel
+  		// 12.06.2018 (OK) CRIAÇÃO DA CLASSE Cadastramento Cliente-confirmação 
+		// 11.06.2018 (OK) implementação do cadastro de cliente
+			// 11.06.2018 (OK) implementação dos últimos 5 cadastro de cliente
+
+// 00.00.2018 (  ) CRIAÇÃO DA CLASSE RelatoriosModel
+		// 00.00.2018 (  ) CRIAÇÃO DA CLASSE RelatoriosSaldoClientesModel [Em implementação]
+				
+
+
+// 00.00.2018 (OK) CRIAÇÃO DA CLASSE GerenciamentoProdutoModel
+		// 06/06/2018 (OK) CRIAÇÃO DA CLASSE GerenciamentoProduto
+		// 06.06.2018 (OK) CRIAÇÃO DA CLASSE GerenciamentoProdutoAlterar
+			// 06.06.2018 (OK) Função alterar Produto e Deletar
+ 
+=================================================================================================
+################################################################################################
+ 
+
+
+ 
+=================================================================================================
+                                             VIEW
+-------------------------------------------------------------------------------------------------
+// 01.06.2018 (OK) CRIAÇÃO DA INTERFACE GRÁFICA DA Home
+		// 01.05.2018 (OK) implementação do valor de venda diária
+		// 01.05.2018 (OK) implementação do valor de ecebimento diária
+
+// 30.05.2018 (OK) CRIAÇÃO DA INTERFACE GRÁFICA DA Venda
+		// 30.05.2018 (OK) CRIAÇÃO DA INTERFACE GRÁFICA DA VendaVender
+			// 09.06.2018 (OK) CRIAÇÃO DA INTERFACE GRÁFICA DA VendaVender
+
+// 28.05.2018 (OK) CRIAÇÃO DA INTERFACE GRÁFICA DA Recebimento
+		// 02.05.2018 (OK) implementação da interface gráfica de recebimento
+		// 02.05.2018 (OK) implementação da interface gráfica de receber
+		// 13.06.2018 (OK) implementação da interface gráfica de recebido
+
+// 01.06.2018 (OK) CRIAÇÃO DA INTERFACE GRÁFICA DA Cadastrar de Cliente
+		// 00.00.2018 (OK) implementação do cadastro de cliente
+		// 00.00.2018 (OK) implementação dos últimos 5 cadastro de cliente
+
+// 00.00.2018 (  ) CRIAÇÃO DA INTERFACE GRÁFICA DA Relatorios
+
+// 04.06.2018 (OK) CRIAÇÃO DA INTERFACE GRÁFICA DA Gerenciamento
+		// 06.06.2018 (OK) implementação do Gerenciamento_produto
+		// 00.06.2018 (OK) implementação do Gerenciamento_produto_alteracao
+=================================================================================================
+################################################################################################
+
+
+
+=================================================================================================
+                                             Bugs
+-------------------------------------------------------------------------------------------------
+// 29.06.2018 (OK) Gerenciamento_produto_alteracao
+	[ configuração de charset ao alterar o nome do produto ]
+	
+	
+
+
+
+
+=================================================================================================
+################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+

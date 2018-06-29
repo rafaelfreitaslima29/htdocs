@@ -7,8 +7,8 @@ namespace Model;
 // Definiçoes do Banco de Dados
 define( 'MYSQL_HOST', 'localhost' );
 define( 'MYSQL_USER', 'root' );
-define( 'MYSQL_PASSWORD', '05051983' );
-define( 'MYSQL_DB_NAME', 'db_agua_venda' );
+define( 'MYSQL_PASSWORD', '' );
+define( 'MYSQL_DB_NAME', 'agua_venda_db' );
 
 class Sql extends \PDO{
     
